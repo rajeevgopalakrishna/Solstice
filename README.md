@@ -1,2 +1,2 @@
-**SOLSTICE**: __**SOL**__idity __**S**__ecurity __**T**__ool for __**I**__nvestigative __**C**__ontract __**E**__xamination
+**SOLSTICE**: _**SOL**_idity _**S**_ecurity _**T**_ool for _**I**_nvestigative _**C**_ontract _**E**_xamination
 
