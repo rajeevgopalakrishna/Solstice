@@ -1,2 +1,2 @@
-SOLSTICE: SOLidity Security Tool for Investigative Contract Examination
+*SOLSTICE*: *SOL*idity *S*ecurity *T*ool for *I*nvestigative *C*ontract *E*xamination
 
