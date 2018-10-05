@@ -1,0 +1,6 @@
+# misc temporary/cached files 
+/TEMP
+*~
+\#*
+\.\#*
+__pycache__/

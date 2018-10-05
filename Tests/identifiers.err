@@ -1,0 +1,12 @@
+./tests/identifiers.sol:38:5: Warning: Variable is declared as a storage pointer. Use an explicit "storage" keyword to silence this warning.
+    string local_typeString;
+    ^---------------------^
+./tests/identifiers.sol:38:5: Warning: Uninitialized storage pointer. Did you mean '<type> memory local_typeString'?
+    string local_typeString;
+    ^---------------------^
+./tests/identifiers.sol:21:3: Warning: No visibility specified. Defaulting to "public". 
+  function foo () {
+  ^ (Relevant source part starts here and spans across multiple lines).
+./tests/identifiers.sol:38:5: Warning: Unused local variable.
+    string local_typeString;
+    ^---------------------^

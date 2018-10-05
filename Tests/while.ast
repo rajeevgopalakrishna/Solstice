@@ -1,0 +1,247 @@
+JSON AST (compact format):
+
+
+======= ./tests/while.sol =======
+{
+	"absolutePath" : "./tests/while.sol",
+	"exportedSymbols" : 
+	{
+		"TestWhile" : 
+		[
+			17
+		]
+	},
+	"id" : 18,
+	"nodeType" : "SourceUnit",
+	"nodes" : 
+	[
+		{
+			"id" : 1,
+			"literals" : 
+			[
+				"solidity",
+				"^",
+				"0.4",
+				".24"
+			],
+			"nodeType" : "PragmaDirective",
+			"src" : "0:24:0"
+		},
+		{
+			"baseContracts" : [],
+			"contractDependencies" : [],
+			"contractKind" : "contract",
+			"documentation" : null,
+			"fullyImplemented" : true,
+			"id" : 17,
+			"linearizedBaseContracts" : 
+			[
+				17
+			],
+			"name" : "TestWhile",
+			"nodeType" : "ContractDefinition",
+			"nodes" : 
+			[
+				{
+					"constant" : false,
+					"id" : 4,
+					"name" : "i",
+					"nodeType" : "VariableDeclaration",
+					"scope" : 17,
+					"src" : "49:10:0",
+					"stateVariable" : true,
+					"storageLocation" : "default",
+					"typeDescriptions" : 
+					{
+						"typeIdentifier" : "t_uint256",
+						"typeString" : "uint256"
+					},
+					"typeName" : 
+					{
+						"id" : 2,
+						"name" : "uint",
+						"nodeType" : "ElementaryTypeName",
+						"src" : "49:4:0",
+						"typeDescriptions" : 
+						{
+							"typeIdentifier" : "t_uint256",
+							"typeString" : "uint256"
+						}
+					},
+					"value" : 
+					{
+						"argumentTypes" : null,
+						"hexValue" : "32",
+						"id" : 3,
+						"isConstant" : false,
+						"isLValue" : false,
+						"isPure" : true,
+						"kind" : "number",
+						"lValueRequested" : false,
+						"nodeType" : "Literal",
+						"src" : "58:1:0",
+						"subdenomination" : null,
+						"typeDescriptions" : 
+						{
+							"typeIdentifier" : "t_rational_2_by_1",
+							"typeString" : "int_const 2"
+						},
+						"value" : "2"
+					},
+					"visibility" : "internal"
+				},
+				{
+					"body" : 
+					{
+						"id" : 15,
+						"nodeType" : "Block",
+						"src" : "86:42:0",
+						"statements" : 
+						[
+							{
+								"body" : 
+								{
+									"id" : 13,
+									"nodeType" : "Block",
+									"src" : "106:18:0",
+									"statements" : 
+									[
+										{
+											"expression" : 
+											{
+												"argumentTypes" : null,
+												"id" : 11,
+												"isConstant" : false,
+												"isLValue" : false,
+												"isPure" : false,
+												"lValueRequested" : false,
+												"nodeType" : "UnaryOperation",
+												"operator" : "--",
+												"prefix" : false,
+												"src" : "114:3:0",
+												"subExpression" : 
+												{
+													"argumentTypes" : null,
+													"id" : 10,
+													"name" : "i",
+													"nodeType" : "Identifier",
+													"overloadedDeclarations" : [],
+													"referencedDeclaration" : 4,
+													"src" : "114:1:0",
+													"typeDescriptions" : 
+													{
+														"typeIdentifier" : "t_uint256",
+														"typeString" : "uint256"
+													}
+												},
+												"typeDescriptions" : 
+												{
+													"typeIdentifier" : "t_uint256",
+													"typeString" : "uint256"
+												}
+											},
+											"id" : 12,
+											"nodeType" : "ExpressionStatement",
+											"src" : "114:3:0"
+										}
+									]
+								},
+								"condition" : 
+								{
+									"argumentTypes" : null,
+									"commonType" : 
+									{
+										"typeIdentifier" : "t_uint256",
+										"typeString" : "uint256"
+									},
+									"id" : 9,
+									"isConstant" : false,
+									"isLValue" : false,
+									"isPure" : false,
+									"lValueRequested" : false,
+									"leftExpression" : 
+									{
+										"argumentTypes" : null,
+										"id" : 7,
+										"name" : "i",
+										"nodeType" : "Identifier",
+										"overloadedDeclarations" : [],
+										"referencedDeclaration" : 4,
+										"src" : "99:1:0",
+										"typeDescriptions" : 
+										{
+											"typeIdentifier" : "t_uint256",
+											"typeString" : "uint256"
+										}
+									},
+									"nodeType" : "BinaryOperation",
+									"operator" : ">",
+									"rightExpression" : 
+									{
+										"argumentTypes" : null,
+										"hexValue" : "30",
+										"id" : 8,
+										"isConstant" : false,
+										"isLValue" : false,
+										"isPure" : true,
+										"kind" : "number",
+										"lValueRequested" : false,
+										"nodeType" : "Literal",
+										"src" : "103:1:0",
+										"subdenomination" : null,
+										"typeDescriptions" : 
+										{
+											"typeIdentifier" : "t_rational_0_by_1",
+											"typeString" : "int_const 0"
+										},
+										"value" : "0"
+									},
+									"src" : "99:5:0",
+									"typeDescriptions" : 
+									{
+										"typeIdentifier" : "t_bool",
+										"typeString" : "bool"
+									}
+								},
+								"id" : 14,
+								"nodeType" : "WhileStatement",
+								"src" : "92:32:0"
+							}
+						]
+					},
+					"documentation" : null,
+					"id" : 16,
+					"implemented" : true,
+					"isConstructor" : false,
+					"isDeclaredConst" : false,
+					"modifiers" : [],
+					"name" : "test_while",
+					"nodeType" : "FunctionDefinition",
+					"parameters" : 
+					{
+						"id" : 5,
+						"nodeType" : "ParameterList",
+						"parameters" : [],
+						"src" : "83:2:0"
+					},
+					"payable" : false,
+					"returnParameters" : 
+					{
+						"id" : 6,
+						"nodeType" : "ParameterList",
+						"parameters" : [],
+						"src" : "86:0:0"
+					},
+					"scope" : 17,
+					"src" : "64:64:0",
+					"stateMutability" : "nonpayable",
+					"superFunction" : null,
+					"visibility" : "public"
+				}
+			],
+			"scope" : 18,
+			"src" : "26:107:0"
+		}
+	],
+	"src" : "0:134:0"
+}

@@ -1,0 +1,6 @@
+./tests/defuse.sol:7:3: Warning: No visibility specified. Defaulting to "public". 
+  function foo(uint i) returns (uint) {
+  ^ (Relevant source part starts here and spans across multiple lines).
+./tests/defuse.sol:13:22: Warning: "msg.value" used in non-payable function. Do you want to add the "payable" modifier to this function?
+    i = a + i + j + (msg.value);
+                     ^-------^
