@@ -117,12 +117,12 @@ class ParseAST:
         if (doWhileStatement.get("condition")):
             print("condition")
             self.parseResults['Counts']['doWhileCondition'] += 1
-            self.visitExpression(doWhileStatement['condition'], doWhileStatementInstance)
+            self.visitExpression(doWhileStatement['condition'], doWhileStatementInstance, "doWhileCondition")
         if (doWhileStatement['body'].get("statements")):
             for statement in doWhileStatement['body']['statements']:
                 self.visitStatement(statement, doWhileStatementInstance)
         if (doWhileStatement['body'].get("expression")): # Body with only a single expression without {}  
-            self.visitExpression(doWhileStatement['body']['expression'], doWhileStatementInstance)
+            self.visitExpression(doWhileStatement['body']['expression'], doWhileStatementInstance, "doWhileExpression")
 
 
     def visitExpressionStatement(self, expressionStatement, parent):
@@ -170,14 +170,14 @@ class ParseAST:
             self.visitExpression(expression['indexExpression'], expressionInstance,"indexExpression")
         if ('components' in expression):
             for component in expression['components']:
-                self.visitExpression(component, expressionInstance,"component")
+                self.visitExpression(component, expressionInstance,"component")        
 
         if (expression['nodeType'] == "FunctionCall"):
             print("FunctionCall")
             self.parseResults['Counts']['FunctionCallCount'] += 1
             functionCall = FunctionCall(expression)
             functionCall.parent = expressionInstance
-            parent.children.append(functionCall)
+            expressionInstance.children.append(functionCall)
             if (expression.get("arguments")):
                 for argument in expression['arguments']:
                     print("FunctionCall Argument")
@@ -189,11 +189,10 @@ class ParseAST:
             self.parseResults['Counts']['IdentifierCount'] += 1
             identifier = Identifier(expression, typeOfExpression)
             identifier.parent = expressionInstance
-            parent.children.append(identifier)
+            expressionInstance.children.append(identifier)
             return
         
 
-                
     def visitStatement(self, statement, parent):
         print("Statement Type: " + statement['nodeType'])
         if (statement['nodeType'] == "VariableDeclarationStatement"):

@@ -7,7 +7,6 @@ contract ExternalContractInteractions {
   	callee.send(1);
 	callee.call();
 	callee.delegatecall();
-	// callee.staticcall();
   }
 
 }
