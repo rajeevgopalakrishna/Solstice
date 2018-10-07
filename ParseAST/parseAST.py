@@ -47,7 +47,7 @@ class ParseAST:
         if (ifStatement.get("condition")):
             print("If condition")
             self.parseResults['Counts']['ifCondition'] += 1
-            self.visitExpression(ifStatement['condition'], ifStatementInstance)            
+            self.visitExpression(ifStatement['condition'], ifStatementInstance,"ifStatementCondition")            
         if (ifStatement.get("trueBody")):
             print("If trueBody")
             self.parseResults['Counts']['ifTrueBody'] += 1
@@ -55,7 +55,7 @@ class ParseAST:
                 for statement in ifStatement['trueBody']['statements']:
                     self.visitStatement(statement, ifStatementInstance)
             if (ifStatement['trueBody'].get('expression')): # Body with only a single expression without {}
-                    self.visitExpression(ifStatement['trueBody']['expression'], ifStatementInstance)
+                    self.visitExpression(ifStatement['trueBody']['expression'], ifStatementInstance,"ifStatementTruebody")
         if (ifStatement.get("falseBody")):
             print("If falseBody")
             self.parseResults['Counts']['ifFalseBody'] += 1
@@ -63,7 +63,7 @@ class ParseAST:
                 for statement in ifStatement['falseBody']['statements']:
                     self.visitStatement(statement, ifStatementInstance)
             if (ifStatement['falseBody'].get('expression')): # Body with only a single expression without {}
-                self.visitExpression(ifStatement['falseBody']['expression'], ifStatementInstance)
+                self.visitExpression(ifStatement['falseBody']['expression'], ifStatementInstance,"ifStatementFalsebody")
 
     def visitWhileStatement(self, whileStatement, parent):
         print("WhileStatement")

@@ -2,6 +2,7 @@ import subprocess, os, sys, getopt
 from ParseAST.parseAST import ParseAST
 from Analysers.analyseExternalContractInteractions import AnalyseExternalContractInteractions
 from Analysers.mapASTSourceToLineNumbers import MapASTSourceToLineNumbers
+from Analysers.analyseExceptions import AnalyseExceptions
 
 class Solstice:
     inputFile = ""
@@ -44,6 +45,8 @@ class Solstice:
         mapASTSourceToLineNumbers.analyser(self.inputFile)
         analyseExternalContractInteractions = AnalyseExternalContractInteractions()
         analyseExternalContractInteractions.analyser()
+        analyseExceptions = AnalyseExceptions()
+        analyseExceptions.analyser()
         astFD.close()
         
 if __name__ == "__main__":
