@@ -3,6 +3,7 @@ from ParseAST.parseAST import ParseAST
 from Analysers.analyseExternalContractInteractions import AnalyseExternalContractInteractions
 from Analysers.mapASTSourceToLineNumbers import MapASTSourceToLineNumbers
 from Analysers.analyseExceptions import AnalyseExceptions
+from Analysers.analyseContractFeatures import AnalyseContractFeatures
 
 class Solstice:
     inputFile = ""
@@ -41,12 +42,19 @@ class Solstice:
         parseAST = ParseAST()
         astFD = open(self.astFile,"r")
         parseResults = parseAST.parse(astFD)
+        
         mapASTSourceToLineNumbers = MapASTSourceToLineNumbers()
         mapASTSourceToLineNumbers.analyser(self.inputFile)
+
+        analyseContractFeatures = AnalyseContractFeatures()
+        analyseContractFeatures.analyser()
+        
         analyseExternalContractInteractions = AnalyseExternalContractInteractions()
         analyseExternalContractInteractions.analyser()
+        
         analyseExceptions = AnalyseExceptions()
         analyseExceptions.analyser()
+
         astFD.close()
         
 if __name__ == "__main__":

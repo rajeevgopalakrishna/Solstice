@@ -4,7 +4,7 @@ class AnalyseFunctionDefinition:
     def getAllFunctionDefinitions():
         functionDefinitions = []
         for functionDefinition in FunctionDefinition.registry:
-            functionDefinitions.append(functionDefinition.name)
+            functionDefinitions.append(functionDefinition)
         return functionDefinitions
     
     def getAllConstructors():
@@ -65,6 +65,14 @@ class AnalyseFunctionDefinition:
                 fallbackFunctionCount += 1
         return fallbackFunctionCount
 
+    def isFallbackFunction(functionDefinition):
+        if (functionDefinition.name == "" and
+            len(functionDefinition.parameters["parameters"]) == 0 and
+            len(functionDefinition.returnParameters["parameters"]) == 0):
+            return True
+        else:
+            return False
+        
     def hasPayableFallbackFunction():
         payableFallbackFunctionCount = 0 # One contract can have only one but there may be multiple contracts in the file
         for functionDefinition in FunctionDefinition.registry:
@@ -75,6 +83,13 @@ class AnalyseFunctionDefinition:
                 payableFallbackFunctionCount += 1
         return payableFallbackFunctionCount
 
-    
+    def isPayableFallbackFunction(functionDefinition):
+        if (functionDefinition.name == "" and
+            len(functionDefinition.parameters["parameters"]) == 0 and
+            len(functionDefinition.returnParameters["parameters"]) == 0 and
+            functionDefinition.payable):
+            return True
+        else:
+            return False
     
     
