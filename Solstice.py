@@ -4,6 +4,7 @@ from Analysers.analyseExternalContractInteractions import AnalyseExternalContrac
 from Analysers.mapASTSourceToLineNumbers import MapASTSourceToLineNumbers
 from Analysers.analyseExceptions import AnalyseExceptions
 from Analysers.analyseContractFeatures import AnalyseContractFeatures
+from Analysers.analyseUncheckedPatterns import AnalyseUncheckedPatterns
 
 class Solstice:
     inputFile = ""
@@ -54,6 +55,9 @@ class Solstice:
         
         analyseExceptions = AnalyseExceptions()
         analyseExceptions.analyser()
+
+        analyseUncheckedPatterns = AnalyseUncheckedPatterns()
+        analyseUncheckedPatterns.analyser()
 
         astFD.close()
         

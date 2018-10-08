@@ -6,7 +6,7 @@ class AnalyseExternalContractInteractions:
     def analyser(self):
         expressions = AnalyseExpression.getAllExpressions()
         mapASTSourceToLineNumbers = MapASTSourceToLineNumbers()
-        print("\n!!!!!!!!!! Analyser: External Contract Interactions !!!!!!!!!!")
+        print("\n<<<<<<<<<< Analyser: External Contract Interactions >>>>>>>>>>")
         
         transfers = AnalyseExpression.getAllTransfers()
         for transfer in transfers:
