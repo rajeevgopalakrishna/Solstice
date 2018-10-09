@@ -74,14 +74,14 @@ class ParseAST:
         if (whileStatement.get("condition")):
             print("While Condition")
             self.parseResults['Counts']['whileCondition'] += 1
-            self.visitExpression(whileStatement['condition'], whileStatementInstance)
+            self.visitExpression(whileStatement['condition'], whileStatementInstance, "whileStatementCondition")
         if (whileStatement['body'].get("statements")):
             print("While Statements")
             for statement in whileStatement['body']['statements']:
                 self.visitStatement(statement, whileStatementInstance)
         if (whileStatement['body'].get("expression")): # Body with only a single expression without {}
             print("While Expression")
-            self.visitExpression(whileStatement['body']['expression'], whileStatementInstance)
+            self.visitExpression(whileStatement['body']['expression'], whileStatementInstance, "whileStatementBody")
 
     def visitForStatement(self, forStatement, parent):
         print("ForStatement")
@@ -92,11 +92,11 @@ class ParseAST:
         if (forStatement.get("condition")):
             print("For condition")
             self.parseResults['Counts']['forCondition'] += 1
-            self.visitExpression(forStatement['condition'], forStatementInstance)
+            self.visitExpression(forStatement['condition'], forStatementInstance, "forStatementCondition")
         if (forStatement.get("loopExpression")):
             print("For loopExpression")
             self.parseResults['Counts']['ForLoopExpression'] += 1
-            self.visitExpression(forStatement['loopExpression'], forStatementInstance)
+            self.visitExpression(forStatement['loopExpression'], forStatementInstance, "forStatementLoopExpression")
         #TODO: Evaluate initializationExpression
         if (forStatement['body'].get("statements")):
             print("For Statements")
@@ -105,7 +105,7 @@ class ParseAST:
         if (forStatement['body'].get("expression")): # Body with only a single expression without {}
             print("For Expression")
             for statement in forStatement['body']['expression']:
-                self.visitExpression(expression, forStatementInstance)
+                self.visitExpression(expression, forStatementInstance, "forStatementBody")
 
             
     def visitDoWhileStatement(self, doWhileStatement, parent):

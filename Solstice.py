@@ -5,6 +5,7 @@ from Analysers.mapASTSourceToLineNumbers import MapASTSourceToLineNumbers
 from Analysers.analyseExceptions import AnalyseExceptions
 from Analysers.analyseContractFeatures import AnalyseContractFeatures
 from Analysers.analyseUncheckedPatterns import AnalyseUncheckedPatterns
+from Analysers.analyseDoSPatterns import AnalyseDoSPatterns
 
 class Solstice:
     inputFile = ""
@@ -58,6 +59,9 @@ class Solstice:
 
         analyseUncheckedPatterns = AnalyseUncheckedPatterns()
         analyseUncheckedPatterns.analyser()
+
+        analyseDoSPatterns = AnalyseDoSPatterns()
+        analyseDoSPatterns.analyser()
 
         astFD.close()
         
