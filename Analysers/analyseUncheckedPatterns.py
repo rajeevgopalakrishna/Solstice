@@ -19,6 +19,10 @@ class AnalyseUncheckedPatterns:
                     print("call checked with assert()")
                     checked = True
                     break
+                if((node.nodeType == "UnaryOperation" or node.nodeType == "BinaryOperation") and node.type == "ifStatementCondition"):
+                    print("call checked with conditional if()")
+                    checked = True
+                    break
                 node = node.parent
             if(checked):
                 continue
