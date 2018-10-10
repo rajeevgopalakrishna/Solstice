@@ -28,3 +28,23 @@ class AnalyseUncheckedPatterns:
                 continue
             else:
                 print("Unchecked call()")
+
+
+        print("\n********** Unchecked selfdestruct() **********")
+        functionCalls = AnalyseFunctionCall.getAllFunctionCalls()
+        for functionCall in functionCalls:
+            if (functionCall.name == "selfdestruct"):
+                print("selfdestruct() at line:" + str(mapASTSourceToLineNumbers.getLine(int(functionCall.src.split(":",)[0]))))
+                node = functionCall.parent
+                checked = False
+                while(node.nodeType != "ContractDefinition"):
+                    if(node.nodeType == "IfStatement"): # Add check for ifStatementCondition containing ownership check via msg.sender
+                        print("selfdestruct likely checked with conditional if()")
+                        checked = True
+                        break
+                    # Add check for Function Definition containing ownership check in a monidifer via msg.sender
+                    node = node.parent
+                if(checked):
+                    continue
+                else:
+                    print("Unchecked selfdestruct()")

@@ -12,5 +12,7 @@ contract Test {
         if (msg.sender != owner) throw;
         _;
     }
-  
+
+    function foo() onlyOwner {
+    }
 }

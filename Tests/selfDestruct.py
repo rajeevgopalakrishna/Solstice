@@ -22,7 +22,7 @@ class TestSelfDestructAST(unittest.TestCase):
         astFD = open("./tests/selfDestruct.ast","r")
         parseResults = parseAST.parse(astFD)
         self.assertEqual(parseResults['Counts']['FunctionCallCount'], 1)
-        functionCalls = AnalyseFunctionCall.getAllFunctionCalls()
+        functionCalls = AnalyseFunctionCall.getAllFunctionCallNames()
         self.assertEqual(len(functionCalls), 1)
         self.assertEqual(functionCalls[0],"selfdestruct")
         astFD.close()

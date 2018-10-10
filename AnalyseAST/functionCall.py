@@ -4,6 +4,12 @@ class AnalyseFunctionCall:
     def getAllFunctionCalls():
         functionCalls = []
         for functionCall in FunctionCall.registry:
+            functionCalls.append(functionCall)
+        return functionCalls
+
+    def getAllFunctionCallNames():
+        functionCalls = []
+        for functionCall in FunctionCall.registry:
             functionCalls.append(functionCall.name)
         return functionCalls
 

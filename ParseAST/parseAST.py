@@ -141,6 +141,7 @@ class ParseAST:
 
     def visitReturnStatement(self, returnStatement, parent):
         print("Return")
+        self.visitExpression(returnStatement['expression'], parent, "returnStatement")
 
     def visitExpression(self, expression, parent, typeOfExpression):
         print("Expression")

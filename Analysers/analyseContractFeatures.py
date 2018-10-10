@@ -27,9 +27,10 @@ class AnalyseContractFeatures:
                 print("Fallback function")
             if (AnalyseFunctionDefinition.isPayableFallbackFunction(function)):
                 print("Payable Fallback function")
-
-            
-        
+            modifiers = function.modifiers
+            for modifier in modifiers:
+                print("Modifier: " + modifier['modifierName']['name'])
+                    
         variableDeclarations = AnalyseVariable.getAllVariables()
         for variable in variableDeclarations:
             print("\n********** Variable Features **********")

@@ -1,3 +1,6 @@
+*.ast
+*.err
+
 # misc temporary/cached files 
 /TEMP
 *~

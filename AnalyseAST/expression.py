@@ -31,6 +31,38 @@ class AnalyseExpression:
             if (expression.memberName == "delegatecall"):
                 delegateCalls.append(expression)
         return delegateCalls
+
+    def getAllTxOrigins():
+        txOrigins = [] 
+        for expression in Expression.registry:
+            found = False
+            if (expression.memberName == "origin"):
+                for child in expression.children:
+                    if (child.nodeType == "Identifier" and child.name == "tx"):
+                        found = True
+                        break
+            if (found):
+                txOrigins.append(expression)
+        return txOrigins
+
+    def getAllBlockMembers():
+        blockMembers = [] 
+        for expression in Expression.registry:
+            found = False
+            if (expression.memberName == "coinbase" or
+                expression.memberName == "timestamp" or
+                expression.memberName == "gaslimit" or
+                expression.memberName == "number" or
+                expression.memberName == "blockhash"
+            ):
+                for child in expression.children:
+                    if (child.nodeType == "Identifier" and child.name == "block"):
+                        found = True
+                        break
+                if (found):
+                    blockMembers.append(expression)
+        return blockMembers
+
     '''
     def getAllStaticCalls():
         staticCalls = [] 
