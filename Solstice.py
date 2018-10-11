@@ -7,6 +7,8 @@ from Analysers.analyseContractFeatures import AnalyseContractFeatures
 from Analysers.analyseUncheckedPatterns import AnalyseUncheckedPatterns
 from Analysers.analyseDoSPatterns import AnalyseDoSPatterns
 from Analysers.analyseDeprecatedConstructs import AnalyseDeprecatedConstructs
+from Analysers.analyseDefsUses import AnalyseDefsUses
+from Analysers.analyseReentrancy import AnalyseReentrancy
 
 class Solstice:
     inputFile = ""
@@ -66,6 +68,12 @@ class Solstice:
 
         analyseDeprecatedConstructs = AnalyseDeprecatedConstructs()
         analyseDeprecatedConstructs.analyser()
+
+        analyseDefsUses = AnalyseDefsUses()
+        analyseDefsUses.analyser()
+
+        analyseReentrancy = AnalyseReentrancy()
+        analyseReentrancy.analyser()
 
         astFD.close()
         
