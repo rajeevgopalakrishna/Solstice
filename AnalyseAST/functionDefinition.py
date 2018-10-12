@@ -18,42 +18,42 @@ class AnalyseFunctionDefinition:
         functionDefinitions = []
         for functionDefinition in FunctionDefinition.registry:
             if (functionDefinition.visibility == "external"):
-                functionDefinitions.append(functionDefinition.name)
+                functionDefinitions.append(functionDefinition)
         return functionDefinitions
 
     def getAllFunctionDefinitionsWithPublicVisibility():
         functionDefinitions = []
         for functionDefinition in FunctionDefinition.registry:
-            if (functionDefinition.visibility == "public"):
-                functionDefinitions.append(functionDefinition.name)
+            if (functionDefinition.visibility == "public" and (functionDefinition.isConstructor == False)):
+                functionDefinitions.append(functionDefinition)
         return functionDefinitions
 
     def getAllFunctionDefinitionsWithInternalVisibility():
         functionDefinitions = []
         for functionDefinition in FunctionDefinition.registry:
             if (functionDefinition.visibility == "internal"):
-                functionDefinitions.append(functionDefinition.name)
+                functionDefinitions.append(functionDefinition)
         return functionDefinitions
 
     def getAllFunctionDefinitionsWithPrivateVisibility():
         functionDefinitions = []
         for functionDefinition in FunctionDefinition.registry:
             if (functionDefinition.visibility == "private"):
-                functionDefinitions.append(functionDefinition.name)
+                functionDefinitions.append(functionDefinition)
         return functionDefinitions
 
     def getAllPureFunctions():
         functionDefinitions = []
         for functionDefinition in FunctionDefinition.registry:
             if (functionDefinition.stateMutability == "pure"):
-                functionDefinitions.append(functionDefinition.name)
+                functionDefinitions.append(functionDefinition)
         return functionDefinitions
 
     def getAllViewFunctions():
         functionDefinitions = []
         for functionDefinition in FunctionDefinition.registry:
             if (functionDefinition.stateMutability == "view"):
-                functionDefinitions.append(functionDefinition.name)
+                functionDefinitions.append(functionDefinition)
         return functionDefinitions
 
     def hasFallbackFunction():

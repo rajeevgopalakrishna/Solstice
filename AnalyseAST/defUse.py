@@ -29,7 +29,6 @@ class DefUseAnalysis:
 
     def getUses(expression, uses, src):
         if (isinstance(expression, Identifier)):
-#            print("Adding use: " + expression.name)
             uses.append({"name":expression.name, "referencedDeclaration":expression.referencedDeclaration, "src":src})
         for child in expression.children:
             DefUseAnalysis.getUses(child, uses, src)
@@ -54,7 +53,6 @@ class DefUseAnalysis:
              node.type == "forStatementCondition" or
              node.type == "forStatementLoopExpression"
             )):
-#            print("Uses at node: " + str(node))
             uses = DefUseAnalysis.getUses(node, uses, node.src)
         for child in node.children:
             DefUseAnalysis.getAllUsesAtNode(child, uses)
@@ -63,16 +61,12 @@ class DefUseAnalysis:
 
     def getAllSuccessorSiblingsOfNode(node):
         successorSiblings = []
-#        print("Node ID: " + str(node.id))
         parent = node.parent
-#        print("Parent of node ID: " + str(node.id) + " is:" + str(parent.id))
         seen = False
         for child in parent.children:
             if (seen):
-#                print("Adding sibling: " + str(child.id))
                 successorSiblings.append(child)
             elif (child.id == node.id):
-#                print("Setting seen to True")
                 seen = True
             else:
                 continue
@@ -82,11 +76,32 @@ class DefUseAnalysis:
         successorSiblings = DefUseAnalysis.getAllSuccessorSiblingsOfNode(node)
         defs = []
         for sibling in successorSiblings:
-#            print("Sibling: " + str(sibling.id))
             defs = DefUseAnalysis.getAllDefsAtNode(sibling, defs)
         return defs
 
 
-    
-    
-    
+    def getDataflowForFunction(functionDefinition):
+        _in = set()
+        _out = set()
+        dataflow = []
+        children = functionDefinition.children;
+        for child in children:
+            _gen = set()
+            _kill = set()
+            _in = _out
+            if (isinstance(child, ExpressionStatement)):
+                defs = []
+                defs = DefUseAnalysis.getAllDefsAtNode(child, defs)
+                for _def in defs:
+                    _gen.add(_def["referencedDeclaration"])
+#                    print("Adding " + str(_def["referencedDeclaration"]) + " to _gen for child ID: " + str(child.id))
+                    if(_def["referencedDeclaration"] in _in):
+                        _kill.add(_def["referencedDeclaration"])
+                    _out = _in.union(_gen.difference(_kill))
+#                print("_in: " + str(_in))
+#                print("_gen: " + str(_gen))
+#                print("_kill: " + str(_kill))
+#                print("_out: " + str(_out))
+                dataflow.append({"id":child.id, "src":child.src, "in":_in, "gen":_gen, "kill":_kill, "out":_out})
+#        print("Returning dataflow: " + str(dataflow))
+        return dataflow

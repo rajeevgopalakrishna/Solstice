@@ -9,6 +9,7 @@ from Analysers.analyseDoSPatterns import AnalyseDoSPatterns
 from Analysers.analyseDeprecatedConstructs import AnalyseDeprecatedConstructs
 from Analysers.analyseDefsUses import AnalyseDefsUses
 from Analysers.analyseReentrancy import AnalyseReentrancy
+from Analysers.analyseTaintedVariables import AnalyseTaintedVariables
 
 class Solstice:
     inputFile = ""
@@ -75,6 +76,9 @@ class Solstice:
         analyseReentrancy = AnalyseReentrancy()
         analyseReentrancy.analyser()
 
+        analyseTaintVariables = AnalyseTaintedVariables()
+        analyseTaintVariables.analyser()
+        
         astFD.close()
         
 if __name__ == "__main__":

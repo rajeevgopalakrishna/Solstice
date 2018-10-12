@@ -25,7 +25,11 @@ class AnalyseVariable:
                 memoryVariable.append(variable)
         return memoryVariables
 
-    
+    def getVariableNameForId(id):
+        for variable in VariableDeclaration.registry:
+            if (variable.id == id):
+                return variable.name
+        return "Error"
         
                 
         
