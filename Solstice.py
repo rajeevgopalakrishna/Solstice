@@ -1,6 +1,7 @@
 import subprocess, os, sys, getopt
 from ParseAST.parseAST import ParseAST
 from Analysers.analyseExternalContractInteractions import AnalyseExternalContractInteractions
+from Analysers.analyseDefaultVisibility import AnalyseDefaultVisibility
 from Analysers.mapASTSourceToLineNumbers import MapASTSourceToLineNumbers
 from Analysers.analyseExceptions import AnalyseExceptions
 from Analysers.analyseContractFeatures import AnalyseContractFeatures
@@ -54,6 +55,9 @@ class Solstice:
 
         analyseContractFeatures = AnalyseContractFeatures()
         analyseContractFeatures.analyser()
+
+        analyseDefaultVisibility = AnalyseDefaultVisibility()
+        analyseDefaultVisibility.analyser()
         
         analyseExternalContractInteractions = AnalyseExternalContractInteractions()
         analyseExternalContractInteractions.analyser()

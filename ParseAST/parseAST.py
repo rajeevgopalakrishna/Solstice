@@ -1,5 +1,6 @@
 import os
 import json
+import logging, sys
 from collections import Counter
 from .ast import AST
 from .contractDefinition import ContractDefinition
@@ -19,19 +20,20 @@ from .identifier import Identifier
 
 class ParseAST:
 
+    logging.basicConfig(stream=sys.stderr, level=logging.INFO)
     parseResults = {}
     parseResults['Counts'] = Counter()
     parseResults['AST'] = ""
     
     def visitVariableDeclaration(self, variable, parent):
-       print("Variable: " + variable['name'])
+       logging.debug("Variable: " + variable['name'])
        variableDeclaration = VariableDeclaration(variable)
        variableDeclaration.parent = parent
        parent.children.append(variableDeclaration)
        self.parseResults['Counts']['VariableDeclarationCount'] += 1
 
     def visitVariableDeclarationStatement(self, statement, parent):
-       print("VariableDeclarationStatement")
+       logging.debug("VariableDeclarationStatement")
        variableDeclarationStatement = VariableDeclarationStatement(statement)
        variableDeclarationStatement.parent = parent
        parent.children.append(variableDeclarationStatement)
@@ -40,16 +42,16 @@ class ParseAST:
                 self.visitVariableDeclaration(declaration, variableDeclarationStatement)
         
     def visitIfStatement(self, ifStatement, parent):
-        print("IfStatement")
+        logging.debug("IfStatement")
         ifStatementInstance = IfStatement(ifStatement)
         ifStatementInstance.parent = parent
         parent.children.append(ifStatementInstance)
         if (ifStatement.get("condition")):
-            print("If condition")
+            logging.debug("If condition")
             self.parseResults['Counts']['ifCondition'] += 1
             self.visitExpression(ifStatement['condition'], ifStatementInstance,"ifStatementCondition")            
         if (ifStatement.get("trueBody")):
-            print("If trueBody")
+            logging.debug("If trueBody")
             self.parseResults['Counts']['ifTrueBody'] += 1
             if (ifStatement['trueBody'].get('statements')):
                 for statement in ifStatement['trueBody']['statements']:
@@ -57,7 +59,7 @@ class ParseAST:
             if (ifStatement['trueBody'].get('expression')): # Body with only a single expression without {}
                     self.visitExpression(ifStatement['trueBody']['expression'], ifStatementInstance,"ifStatementTruebody")
         if (ifStatement.get("falseBody")):
-            print("If falseBody")
+            logging.debug("If falseBody")
             self.parseResults['Counts']['ifFalseBody'] += 1
             if (ifStatement['falseBody'].get("statements")):
                 for statement in ifStatement['falseBody']['statements']:
@@ -66,56 +68,56 @@ class ParseAST:
                 self.visitExpression(ifStatement['falseBody']['expression'], ifStatementInstance,"ifStatementFalsebody")
 
     def visitWhileStatement(self, whileStatement, parent):
-        print("WhileStatement")
+        logging.debug("WhileStatement")
         whileStatementInstance = WhileStatement(whileStatement)
         whileStatementInstance.parent = parent
         parent.children.append(whileStatementInstance)
         self.parseResults['Counts']['WhileCount'] += 1
         if (whileStatement.get("condition")):
-            print("While Condition")
+            logging.debug("While Condition")
             self.parseResults['Counts']['whileCondition'] += 1
             self.visitExpression(whileStatement['condition'], whileStatementInstance, "whileStatementCondition")
         if (whileStatement['body'].get("statements")):
-            print("While Statements")
+            logging.debug("While Statements")
             for statement in whileStatement['body']['statements']:
                 self.visitStatement(statement, whileStatementInstance)
         if (whileStatement['body'].get("expression")): # Body with only a single expression without {}
-            print("While Expression")
+            logging.debug("While Expression")
             self.visitExpression(whileStatement['body']['expression'], whileStatementInstance, "whileStatementBody")
 
     def visitForStatement(self, forStatement, parent):
-        print("ForStatement")
+        logging.debug("ForStatement")
         forStatementInstance = ForStatement(forStatement)
         forStatementInstance.parent = parent
         parent.children.append(forStatementInstance)
         self.parseResults['Counts']['ForCount'] += 1
         if (forStatement.get("condition")):
-            print("For condition")
+            logging.debug("For condition")
             self.parseResults['Counts']['forCondition'] += 1
             self.visitExpression(forStatement['condition'], forStatementInstance, "forStatementCondition")
         if (forStatement.get("loopExpression")):
-            print("For loopExpression")
+            logging.debug("For loopExpression")
             self.parseResults['Counts']['ForLoopExpression'] += 1
             self.visitExpression(forStatement['loopExpression'], forStatementInstance, "forStatementLoopExpression")
         #TODO: Evaluate initializationExpression
         if (forStatement['body'].get("statements")):
-            print("For Statements")
+            logging.debug("For Statements")
             for statement in forStatement['body']['statements']:
                 self.visitStatement(statement, forStatementInstance)
         if (forStatement['body'].get("expression")): # Body with only a single expression without {}
-            print("For Expression")
+            logging.debug("For Expression")
             for statement in forStatement['body']['expression']:
                 self.visitExpression(expression, forStatementInstance, "forStatementBody")
 
             
     def visitDoWhileStatement(self, doWhileStatement, parent):
-        print("DoWhileStatement")
+        logging.debug("DoWhileStatement")
         doWhileStatementInstance = DoWhileStatement(doWhileStatement)
         doWhileStatementInstance.parent = parent
         parent.children.append(doWhileStatementInstance)
         self.parseResults['Counts']['DoWhileCount'] += 1
         if (doWhileStatement.get("condition")):
-            print("condition")
+            logging.debug("condition")
             self.parseResults['Counts']['doWhileCondition'] += 1
             self.visitExpression(doWhileStatement['condition'], doWhileStatementInstance, "doWhileCondition")
         if (doWhileStatement['body'].get("statements")):
@@ -126,7 +128,7 @@ class ParseAST:
 
 
     def visitExpressionStatement(self, expressionStatement, parent):
-        print("ExpressionStatement")
+        logging.debug("ExpressionStatement")
         expressionStatementInstance = ExpressionStatement(expressionStatement)
         expressionStatementInstance.parent = parent
         parent.children.append(expressionStatementInstance)
@@ -134,19 +136,19 @@ class ParseAST:
         self.visitExpression(expressionStatement['expression'],expressionStatementInstance,"expressionStatement")
         
     def visitContinueStatement(self, continueStatement, parent):
-        print("Continue")
+        logging.debug("Continue")
 
     def visitBreakStatement(self, breakStatement, parent):
-        print("Break")
+        logging.debug("Break")
 
     def visitReturnStatement(self, returnStatement, parent):
-        print("Return")
+        logging.debug("Return")
         self.visitExpression(returnStatement['expression'], parent, "returnStatement")
 
     def visitExpression(self, expression, parent, typeOfExpression):
-        print("Expression")
-        print("Expression nodeType: " + expression['nodeType'])
-        print("Expression Type: " + typeOfExpression)
+        logging.debug("Expression")
+        logging.debug("Expression nodeType: " + expression['nodeType'])
+        logging.debug("Expression Type: " + typeOfExpression)
         self.parseResults['Counts']['ExpressionCount'] += 1
 
         expressionInstance = Expression(expression,typeOfExpression)
@@ -174,19 +176,19 @@ class ParseAST:
                 self.visitExpression(component, expressionInstance,"component")        
 
         if (expression['nodeType'] == "FunctionCall"):
-            print("FunctionCall")
+            logging.debug("FunctionCall")
             self.parseResults['Counts']['FunctionCallCount'] += 1
             functionCall = FunctionCall(expression)
             functionCall.parent = expressionInstance
             expressionInstance.children.append(functionCall)
             if (expression.get("arguments")):
                 for argument in expression['arguments']:
-                    print("FunctionCall Argument")
+                    logging.debug("FunctionCall Argument")
                     self.visitExpression(argument, functionCall,"functionCallArgument")
             return
         
         if (expression['nodeType'] == "Identifier"):
-            print("Identifier")
+            logging.debug("Identifier")
             self.parseResults['Counts']['IdentifierCount'] += 1
             identifier = Identifier(expression, typeOfExpression)
             identifier.parent = expressionInstance
@@ -195,7 +197,7 @@ class ParseAST:
         
 
     def visitStatement(self, statement, parent):
-        print("Statement Type: " + statement['nodeType'])
+        logging.debug("Statement Type: " + statement['nodeType'])
         if (statement['nodeType'] == "VariableDeclarationStatement"):
             self.visitVariableDeclarationStatement(statement, parent)
         if (statement['nodeType'] == "IfStatement"):
@@ -216,16 +218,16 @@ class ParseAST:
             self.visitExpressionStatement(statement, parent)
 
     def visitStructDefinition(self, node, parent):
-        print("Struct Name: " + node['name'])
+        logging.debug("Struct Name: " + node['name'])
 
     def visitPragmaDirective(self, pragma, parent):
-        print("Pragma: " + "".join(str(x) for x in pragma['literals']))
+        logging.debug("Pragma: " + "".join(str(x) for x in pragma['literals']))
 
     def visitImportDirective(self, _import, parent):
-        print("Import Directive")
+        logging.debug("Import Directive")
 
     def visitContractDefinition(self, node, parent):
-        print("Contract Name: " + node['name'])
+        logging.debug("Contract Name: " + node['name'])
         contractDefinition = ContractDefinition(node)
         contractDefinition.parent = parent
         parent.children.append(contractDefinition)
@@ -234,14 +236,14 @@ class ParseAST:
             self.visit(node, contractDefinition)
 
     def visitEventDefinition(self, node, parent):
-        print("Event Name: " + node['name'])
+        logging.debug("Event Name: " + node['name'])
         eventDefinition = EventDefinition(node)
         eventDefinition.parent = parent
         parent.children.append(eventDefinition)
         self.parseResults['Counts']['EventCount'] += 1
             
     def visitFunctionDefinition(self, node, parent):
-        print("Function Name: " + node['name'])
+        logging.debug("Function Name: " + node['name'])
         functionDefinition = FunctionDefinition(node)
         functionDefinition.parent = parent
         parent.children.append(functionDefinition)
@@ -250,7 +252,7 @@ class ParseAST:
             self.visitStatement(statement, functionDefinition)
 
     def visitModifierDefinition(self, node, parent):
-        print("Modifier Name: " + node['name'])
+        logging.debug("Modifier Name: " + node['name'])
         modifierDefinition = ModifierDefinition(node)
         modifierDefinition.parent = parent
         parent.children.append(modifierDefinition)
@@ -260,7 +262,7 @@ class ParseAST:
             self.visitStatement(statement, modifierDefinition)
 
     def visit(self, node, parent):
-        print(node['nodeType'])
+        logging.debug(node['nodeType'])
         if (node['nodeType'] == "PragmaDirective"):
             self.visitPragmaDirective(node, parent)
         if (node['nodeType'] == "ImportDirective"):
