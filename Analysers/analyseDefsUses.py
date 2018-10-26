@@ -29,7 +29,6 @@ class AnalyseDefsUses:
             print("Function definition: " + function.name  + " at line:" + str(mapASTSourceToLineNumbers.getLine(int(function.src.split(":",)[0]))))
             dataflow = []
             dataflow = DefUseAnalysis.getDataflowForFunction(function)
-#            print(str(dataflow))
             for item in dataflow:
                 _gen = []
                 _kill = []

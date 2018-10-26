@@ -1,8 +1,10 @@
+import logging, sys
 from ParseAST.expressionStatement import ExpressionStatement
 from ParseAST.identifier import Identifier
 from ParseAST.expression import Expression
 
 class DefUseAnalysis:
+    logging.basicConfig(stream=sys.stderr, level=logging.INFO)
     def getDefs(expression, defs, src):
         if (isinstance(expression, Identifier)):
             defs.append({"name":expression.name, "referencedDeclaration":expression.referencedDeclaration, "src":src})
@@ -94,14 +96,14 @@ class DefUseAnalysis:
                 defs = DefUseAnalysis.getAllDefsAtNode(child, defs)
                 for _def in defs:
                     _gen.add(_def["referencedDeclaration"])
-#                    print("Adding " + str(_def["referencedDeclaration"]) + " to _gen for child ID: " + str(child.id))
+                    logging.debug("Adding " + str(_def["referencedDeclaration"]) + " to _gen for child ID: " + str(child.id))
                     if(_def["referencedDeclaration"] in _in):
                         _kill.add(_def["referencedDeclaration"])
                     _out = _in.union(_gen.difference(_kill))
-#                print("_in: " + str(_in))
-#                print("_gen: " + str(_gen))
-#                print("_kill: " + str(_kill))
-#                print("_out: " + str(_out))
+                logging.debug("_in: " + str(_in))
+                logging.debug("_gen: " + str(_gen))
+                logging.debug("_kill: " + str(_kill))
+                logging.debug("_out: " + str(_out))
                 dataflow.append({"id":child.id, "src":child.src, "in":_in, "gen":_gen, "kill":_kill, "out":_out})
-#        print("Returning dataflow: " + str(dataflow))
+        logging.debug("Returning dataflow: " + str(dataflow))
         return dataflow

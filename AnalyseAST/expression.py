@@ -63,14 +63,6 @@ class AnalyseExpression:
                     blockMembers.append(expression)
         return blockMembers
 
-    '''
-    def getAllStaticCalls():
-        staticCalls = [] 
-        for expression in Expression.registry:
-            if (expression.memberName == "staticCall"):
-                staticCalls.append(expression)
-        return staticCalls
-    ''' 
 
     
     
