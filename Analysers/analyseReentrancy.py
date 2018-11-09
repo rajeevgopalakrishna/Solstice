@@ -7,7 +7,6 @@ from Analysers.mapASTSourceToLineNumbers import MapASTSourceToLineNumbers
 
 class AnalyseReentrancy:
 
-    logging.basicConfig(stream=sys.stderr, level=logging.INFO)
     def analyser(self):
         expressions = AnalyseExpression.getAllExpressions()
         mapASTSourceToLineNumbers = MapASTSourceToLineNumbers()

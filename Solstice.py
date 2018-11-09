@@ -1,4 +1,4 @@
-import subprocess, os, sys, getopt
+import subprocess, os, sys, getopt, logging
 from ParseAST.parseAST import ParseAST
 from Analysers.analyseExternalContractInteractions import AnalyseExternalContractInteractions
 from Analysers.analyseDefaultVisibility import AnalyseDefaultVisibility
@@ -17,10 +17,11 @@ class Solstice:
     outputFile = ""
     astFile = ""
     errFile = ""
+    loggingLevel = "INFO"
     
     def main(self, argv):
         try:
-            opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
+            opts, args = getopt.getopt(argv,"hdi:o:",["ifile=","ofile="])
         except getopt.GetoptError:
             print("Solstice.py -i <Input Solidity File> -o <Output Report File>")
             sys.exit(2)
@@ -28,12 +29,16 @@ class Solstice:
             if opt == '-h':
                 print("Solstice.py -i <Input Solidity File> -o <Output Report File>")
                 sys.exit()
+            elif opt == '-d':
+                print("Setting Logging level to debug")
+                self.loggingLevel = "DEBUG"
             elif opt in ("-i", "--ifile"):
                 self.inputFile = arg
             elif opt in ("-o", "--ofile"):
                 self.outputFile = arg
         print("Input file is ", self.inputFile)
         print("Output file is ", self.outputFile)
+        logging.basicConfig(level=self.loggingLevel)
 
     def process(self):
         self.astFile = self.inputFile + ".ast"

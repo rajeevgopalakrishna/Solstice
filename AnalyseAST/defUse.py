@@ -4,9 +4,9 @@ from ParseAST.identifier import Identifier
 from ParseAST.expression import Expression
 
 class DefUseAnalysis:
-    logging.basicConfig(stream=sys.stderr, level=logging.INFO)
     def getDefs(expression, defs, src):
         if (isinstance(expression, Identifier)):
+            logging.debug("getDefs expression: " + expression.name)
             defs.append({"name":expression.name, "referencedDeclaration":expression.referencedDeclaration, "src":src})
         for child in expression.children:
             DefUseAnalysis.getDefs(child, defs, src)
@@ -16,7 +16,7 @@ class DefUseAnalysis:
         defs = []
         for expression in Expression.registry:
             if (expression.type == "leftHandSide" or expression.type == "subExpression"):
-                print("Calling getDefs")
+                logging.debug("Calling getDefs")
                 defs = DefUseAnalysis.getDefs(expression, defs, expression.src)
         return defs
 
@@ -40,7 +40,7 @@ class DefUseAnalysis:
         uses = []
         for expression in Expression.registry:
             if (expression.type == "rightHandSide" or expression.type == "subExpression"):
-                print("Calling getUses")
+                logging.debug("Calling getUses")
                 defs = DefUseAnalysis.getUses(expression, uses, expression.src)
         return uses
 
@@ -82,7 +82,52 @@ class DefUseAnalysis:
         return defs
 
 
+    def getDataflowForNode(node, dataflow, _in):
+        logging.debug("Node ID: " + str(node.id))
+        logging.debug("_in: " + str(_in))
+        _gen = set()
+        _kill = set()
+        _out = _in
+        if (isinstance(node, ExpressionStatement)):
+            defs = []
+            defs = DefUseAnalysis.getAllDefsAtNode(node, defs)
+            for _def in defs:
+                _gen.add(_def["referencedDeclaration"])
+                logging.debug("Adding " + str(_def["referencedDeclaration"]) + " to _gen for node ID: " + str(node.id))
+                if(_in and _def["referencedDeclaration"] in _in):
+                    _kill.add(_def["referencedDeclaration"])
+                if (not _in):
+                    logging.debug("_in is empty")
+                    _in = set()
+                _out = _in.union(_gen.difference(_kill))
+                logging.debug("_in: " + str(_in))
+                logging.debug("_gen: " + str(_gen))
+                logging.debug("_kill: " + str(_kill))
+                logging.debug("_out: " + str(_out))
+                dataflow.append({"id":node.id, "src":node.src, "in":_in, "gen":_gen, "kill":_kill, "out":_out})
+            return(_out)
+        else:
+            for child in node.children:
+                logging.debug("Calling getDataflowForNode for node: " + str(child.id))
+                logging.debug("_in: " + str(_in))
+                _out = DefUseAnalysis.getDataflowForNode(child, dataflow, _in)
+                logging.debug("Returned _out: " + str(_out))
+                _in = _out
+            return(_out)
+            
     def getDataflowForFunction(functionDefinition):
+        _in = set()
+        _out = set()
+        dataflow = []
+        children = functionDefinition.children;
+        for child in children:
+            _gen = set()
+            _kill = set()
+            _out = DefUseAnalysis.getDataflowForNode(child, dataflow, _in)
+            _in = _out
+        return dataflow
+
+    def getDataflowForFunctionNaive(functionDefinition):
         _in = set()
         _out = set()
         dataflow = []

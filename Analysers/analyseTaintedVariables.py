@@ -5,7 +5,6 @@ from Analysers.mapASTSourceToLineNumbers import MapASTSourceToLineNumbers
 
 
 class AnalyseTaintedVariables:
-    logging.basicConfig(stream=sys.stderr, level=logging.INFO)
     def analyser(self):
         
         mapASTSourceToLineNumbers = MapASTSourceToLineNumbers()

@@ -35,13 +35,18 @@ class AnalyseDefsUses:
                 _in = []
                 _out = []
                 for var in item["gen"]:
-                    _gen.append(AnalyseVariable.getVariableNameForId(var))
+                    if(AnalyseVariable.getVariableNameForId(var) != "Error"):
+                        _gen.append(AnalyseVariable.getVariableNameForId(var))
                 for var in item["kill"]:
-                    _kill.append(AnalyseVariable.getVariableNameForId(var))
-                for var in item["in"]:
-                    _in.append(AnalyseVariable.getVariableNameForId(var))
+                    if(AnalyseVariable.getVariableNameForId(var) != "Error"):
+                        _kill.append(AnalyseVariable.getVariableNameForId(var))
+                if(item["in"]):
+                    for var in item["in"]:
+                        if(AnalyseVariable.getVariableNameForId(var) != "Error"):
+                            _in.append(AnalyseVariable.getVariableNameForId(var))
                 for var in item["out"]:
-                    _out.append(AnalyseVariable.getVariableNameForId(var))
+                    if(AnalyseVariable.getVariableNameForId(var) != "Error"):
+                        _out.append(AnalyseVariable.getVariableNameForId(var))
                 print("Node Id: " +
                       str(item["id"]) + 
                       " at line:" +

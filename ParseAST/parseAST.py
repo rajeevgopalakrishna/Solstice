@@ -20,7 +20,6 @@ from .identifier import Identifier
 
 class ParseAST:
 
-    logging.basicConfig(stream=sys.stderr, level=logging.INFO)
     parseResults = {}
     parseResults['Counts'] = Counter()
     parseResults['AST'] = ""
@@ -250,7 +249,11 @@ class ParseAST:
         body = node['body']
         for statement in body['statements']:
             self.visitStatement(statement, functionDefinition)
-
+        parameters = node['parameters']['parameters']
+        print("Parameters: " + str(parameters))
+        for parameter in parameters:
+            self.visitVariableDeclaration(parameter, functionDefinition)
+            
     def visitModifierDefinition(self, node, parent):
         logging.debug("Modifier Name: " + node['name'])
         modifierDefinition = ModifierDefinition(node)
