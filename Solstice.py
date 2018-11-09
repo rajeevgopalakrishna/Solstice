@@ -5,7 +5,8 @@ from Analysers.analyseDefaultVisibility import AnalyseDefaultVisibility
 from Analysers.mapASTSourceToLineNumbers import MapASTSourceToLineNumbers
 from Analysers.analyseExceptions import AnalyseExceptions
 from Analysers.analyseContractFeatures import AnalyseContractFeatures
-from Analysers.analyseUncheckedPatterns import AnalyseUncheckedPatterns
+from Analysers.analyseUncheckedCalls import AnalyseUncheckedCalls
+from Analysers.analyseUncheckedSelfdestructs import AnalyseUncheckedSelfdestructs
 from Analysers.analyseDoSPatterns import AnalyseDoSPatterns
 from Analysers.analyseDeprecatedConstructs import AnalyseDeprecatedConstructs
 from Analysers.analyseDefsUses import AnalyseDefsUses
@@ -70,8 +71,11 @@ class Solstice:
         analyseExceptions = AnalyseExceptions()
         analyseExceptions.analyser()
 
-        analyseUncheckedPatterns = AnalyseUncheckedPatterns()
-        analyseUncheckedPatterns.analyser()
+        analyseUncheckedCalls = AnalyseUncheckedCalls()
+        analyseUncheckedCalls.analyser()
+
+        analyseUncheckedSelfdestructs = AnalyseUncheckedSelfdestructs()
+        analyseUncheckedSelfdestructs.analyser()
 
         analyseDoSPatterns = AnalyseDoSPatterns()
         analyseDoSPatterns.analyser()

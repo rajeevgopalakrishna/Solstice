@@ -12,4 +12,8 @@ contract SelfDestruct {
     if (msg.sender == owner)
       selfdestruct(owner);
   }
+
+  function unprotectedKill() {
+    selfdestruct(owner);
+  }
 }
