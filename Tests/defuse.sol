@@ -10,7 +10,14 @@ contract TestDefUse {
   }
 
   mapping(address => uint) balances;
-  
+
+  function foobar(uint k) returns (uint) {
+    uint i;
+    i = k;
+    i = i + 1;
+    return i;
+  }
+
   function bar(uint k) returns (uint) {
     return k+1;
   }

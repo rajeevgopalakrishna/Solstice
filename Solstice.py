@@ -33,6 +33,7 @@ class Solstice:
             elif opt == '-d':
                 print("Setting Logging level to debug")
                 self.loggingLevel = "DEBUG"
+                AnalyseDefsUses.logginglevel = "DEBUG"
             elif opt in ("-i", "--ifile"):
                 self.inputFile = arg
             elif opt in ("-o", "--ofile"):

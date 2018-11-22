@@ -2,6 +2,8 @@ import logging, sys
 from ParseAST.expressionStatement import ExpressionStatement
 from ParseAST.identifier import Identifier
 from ParseAST.expression import Expression
+from ParseAST.ifStatement import IfStatement
+from Libraries.myset import MySet
 
 class DefUseAnalysis:
     def getDefs(expression, defs, src):
@@ -31,7 +33,7 @@ class DefUseAnalysis:
 
     def getUses(expression, uses, src):
         if (isinstance(expression, Identifier)):
-            uses.append({"name":expression.name, "referencedDeclaration":expression.referencedDeclaration, "src":src})
+            uses.append({"name":expression.name, "referencedDeclaration":expression.referencedDeclaration, "nodeID":expression.id, "src":src})
         for child in expression.children:
             DefUseAnalysis.getUses(child, uses, src)
         return uses
@@ -84,71 +86,66 @@ class DefUseAnalysis:
 
     def getDataflowForNode(node, dataflow, _in):
         logging.debug("Node ID: " + str(node.id))
-        logging.debug("_in: " + str(_in))
-        _gen = set()
-        _kill = set()
+        if(_in is not None):
+            logging.debug("_in: " + str(_in._set))
+        _gen = MySet()
+        _kill = MySet()
         _out = _in
-        if (isinstance(node, ExpressionStatement)):
+        if (isinstance(node, ExpressionStatement) or 
+            isinstance(node, Expression) and
+            (node.type == "rightHandSide" or
+             node.type == "subExpression" or
+             node.type == "functionCallArgument" or
+             node.type == "returnStatement" or
+             node.type == "ifStatementCondition" or
+             node.type == "doWhileCondition" or
+             node.type == "forStatementCondition" or
+             node.type == "forStatementLoopExpression"
+            )):
             defs = []
             defs = DefUseAnalysis.getAllDefsAtNode(node, defs)
-            for _def in defs:
-                _gen.add(_def["referencedDeclaration"])
-                logging.debug("Adding " + str(_def["referencedDeclaration"]) + " to _gen for node ID: " + str(node.id))
-                if(_in and _def["referencedDeclaration"] in _in):
-                    _kill.add(_def["referencedDeclaration"])
-                if (not _in):
-                    logging.debug("_in is empty")
-                    _in = set()
-                _out = _in.union(_gen.difference(_kill))
-                logging.debug("_in: " + str(_in))
-                logging.debug("_gen: " + str(_gen))
-                logging.debug("_kill: " + str(_kill))
-                logging.debug("_out: " + str(_out))
+            if (len(defs) == 0):
                 dataflow.append({"id":node.id, "src":node.src, "in":_in, "gen":_gen, "kill":_kill, "out":_out})
-            return(_out)
+            else:
+                for _def in defs:
+                    _gen.add(_def["referencedDeclaration"], node)
+                    logging.debug("Adding " + str(_def["referencedDeclaration"]) + " to _gen for node ID: " + str(node.id))
+                    if(_in and (_def["referencedDeclaration"] in _in._set)):
+                        logging.debug("Adding to kill")
+                        _kill.add(_def["referencedDeclaration"], node)
+                    if (_in is None):
+                        logging.debug("_in is empty")
+                        _in = MySet()
+                    #_out = _in.union(_gen.difference(_kill))
+                    _out = _in.union(_gen)
+                    if(_in is not None):
+                        logging.debug("_in: " + str(_in._set))
+                    if(_gen is not None):
+                        logging.debug("_gen: " + str(_gen._set))
+                        logging.debug("_kill: " + str(_kill._set))
+                    if(_out is not None):
+                        logging.debug("_out: " + str(_out._set))
+                    dataflow.append({"id":node.id, "src":node.src, "in":_in, "gen":_gen, "kill":_kill, "out":_out})
+                return(_out)
         else:
             for child in node.children:
                 logging.debug("Calling getDataflowForNode for node: " + str(child.id))
-                logging.debug("_in: " + str(_in))
+                if(_in is not None):
+                    logging.debug("_in: " + str(_in._set))
                 _out = DefUseAnalysis.getDataflowForNode(child, dataflow, _in)
-                logging.debug("Returned _out: " + str(_out))
+                if(_out is not None):
+                    logging.debug("Returned _out: " + str(_out._set))
                 _in = _out
             return(_out)
             
     def getDataflowForFunction(functionDefinition):
-        _in = set()
-        _out = set()
+        _in = MySet()
+        _out = MySet()
         dataflow = []
         children = functionDefinition.children;
         for child in children:
-            _gen = set()
-            _kill = set()
+            _gen = MySet()
+            _kill = MySet()
             _out = DefUseAnalysis.getDataflowForNode(child, dataflow, _in)
             _in = _out
-        return dataflow
-
-    def getDataflowForFunctionNaive(functionDefinition):
-        _in = set()
-        _out = set()
-        dataflow = []
-        children = functionDefinition.children;
-        for child in children:
-            _gen = set()
-            _kill = set()
-            _in = _out
-            if (isinstance(child, ExpressionStatement)):
-                defs = []
-                defs = DefUseAnalysis.getAllDefsAtNode(child, defs)
-                for _def in defs:
-                    _gen.add(_def["referencedDeclaration"])
-                    logging.debug("Adding " + str(_def["referencedDeclaration"]) + " to _gen for child ID: " + str(child.id))
-                    if(_def["referencedDeclaration"] in _in):
-                        _kill.add(_def["referencedDeclaration"])
-                    _out = _in.union(_gen.difference(_kill))
-                logging.debug("_in: " + str(_in))
-                logging.debug("_gen: " + str(_gen))
-                logging.debug("_kill: " + str(_kill))
-                logging.debug("_out: " + str(_out))
-                dataflow.append({"id":child.id, "src":child.src, "in":_in, "gen":_gen, "kill":_kill, "out":_out})
-        logging.debug("Returning dataflow: " + str(dataflow))
         return dataflow
