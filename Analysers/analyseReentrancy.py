@@ -7,6 +7,8 @@ from Analysers.mapASTSourceToLineNumbers import MapASTSourceToLineNumbers
 
 class AnalyseReentrancy:
 
+    statsPotentialReentrancy = []
+    
     def analyser(self):
         expressions = AnalyseExpression.getAllExpressions()
         mapASTSourceToLineNumbers = MapASTSourceToLineNumbers()
@@ -38,6 +40,10 @@ class AnalyseReentrancy:
                     if (variableID == variable.id and variable.stateVariable):
                         defsOfStateVariables.append(_def)
             if (len(defsOfStateVariables) != 0):
+                self.statsPotentialReentrancy.append({
+                    "line":str(mapASTSourceToLineNumbers.getLine(int(call.src.split(":",)[0]))),
+                    "info":"potential reentrancy: state change after call()"
+                })
                 print("Potential Reentrancy: State change after call()")
             else:
                 print("No Reentrancy: No state change after call()")

@@ -4,21 +4,25 @@ from ParseAST.parseAST import ParseAST
 from AnalyseAST.functionDefinition import AnalyseFunctionDefinition
 class TestConstructor(unittest.TestCase):
 
+    testFile = "functionConstructor"
+    testDir = "./Tests/Parsing/"
+    testPath = testDir+testFile
+    
     def setUp(self):
-        astFD = open("./tests/functionConstructor.ast","w")
-        errFD = open("./tests/functionConstructor.err","w")
-        p = subprocess.Popen(['solc','--ast-compact-json','./tests/functionConstructor.sol'], stdout=astFD,stderr=errFD)
+        astFD = open(self.testPath+".ast","w")
+        errFD = open(self.testPath+".err","w")
+        p = subprocess.Popen(['solc','--ast-compact-json',self.testDir+'/Contracts/'+self.testFile+'.sol'], stdout=astFD,stderr=errFD)
         p.wait()
         astFD.close()
         errFD.close()
 
     def tearDown(self):
-        p = subprocess.Popen(['rm','-f','./tests/functionConstructor.ast','./tests/functionConstructor.err'])
+        p = subprocess.Popen(['rm','-f',self.testPath+'.ast',self.testPath+'.err'])
         p.wait()
         
     def test_functionConstructor(self):
         parseAST = ParseAST()
-        astFD = open("./tests/functionConstructor.ast","r")
+        astFD = open(self.testPath+".ast","r")
         parseResults = parseAST.parse(astFD)
         constructors = AnalyseFunctionDefinition.getAllConstructors()
         self.assertEqual(len(constructors), 1)

@@ -4,6 +4,10 @@ from AnalyseAST.expression import AnalyseExpression
 
 class AnalyseUncheckedCalls:
 
+    statsUncheckedCalls = []
+    statsAssertCheckedCalls = []
+    statsConditionalCheckedCalls = []
+    
     def analyser(self):
         mapASTSourceToLineNumbers = MapASTSourceToLineNumbers()
         print("\n<<<<<<<<<< Analyser: Unchecked Calls >>>>>>>>>>")
@@ -15,10 +19,18 @@ class AnalyseUncheckedCalls:
             checked = False
             while(node.nodeType != "ContractDefinition"):
                 if(node.nodeType == "FunctionCall" and node.name == "assert"):
+                    self.statsAssertCheckedCalls.append({
+                        "line":str(mapASTSourceToLineNumbers.getLine(int(call.src.split(":",)[0]))),
+                        "info":"assert checked call"
+                    })
                     print("call checked with assert()")
                     checked = True
                     break
                 if((node.nodeType == "UnaryOperation" or node.nodeType == "BinaryOperation") and node.type == "ifStatementCondition"):
+                    self.statsConditionalCheckedCalls.append({
+                        "line":str(mapASTSourceToLineNumbers.getLine(int(call.src.split(":",)[0]))),
+                        "info":"conditional checked call"
+                    })
                     print("call checked with conditional if()")
                     checked = True
                     break
@@ -26,6 +38,10 @@ class AnalyseUncheckedCalls:
             if(checked):
                 continue
             else:
+                self.statsUncheckedCalls.append({
+                    "line":str(mapASTSourceToLineNumbers.getLine(int(call.src.split(":",)[0]))),
+                    "info":"Unchecked call"
+                })
                 print("Unchecked call()")
 
 

@@ -27,8 +27,10 @@ class MapASTSourceToLineNumbers:
         inputFileFD.seek(fromChar)
         readString = inputFileFD.read(toChar-fromChar)
         if(readString.find(stringOfInterest) == -1):
+            inputFileFD.close()
             return False
         else:
+            inputFileFD.close()
             return True
     
     def chkStringPresentVariableVisibility(self, stringOfInterest, typeSrc, varSrc):
@@ -38,6 +40,8 @@ class MapASTSourceToLineNumbers:
         inputFileFD.seek(fromChar)
         readString = inputFileFD.read(toChar-fromChar)
         if(readString.find(stringOfInterest) == -1):
+            inputFileFD.close()
             return False
         else:
+            inputFileFD.close()
             return True

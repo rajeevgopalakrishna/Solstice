@@ -6,7 +6,11 @@ from AnalyseAST.variable import AnalyseVariable
 from Libraries.myset import MySet
 
 class AnalyseDefsUses:
+
     loggingLevel = "INFO"
+    statsDefs = []
+    statsUses = []
+    
     def analyser(self):
         mapASTSourceToLineNumbers = MapASTSourceToLineNumbers()
         print("\n<<<<<<<<<< Analyser: Defs and Uses >>>>>>>>>>")
@@ -55,14 +59,22 @@ class AnalyseDefsUses:
 
             defs = []
             defs = DefUseAnalysis.getAllDefsAtNode(function, defs)
-
-            if(self.loggingLevel == "DEBUG"):
-                for _def in defs:
+            
+            for _def in defs:
+                self.statsDefs.append({
+                    "line":str(mapASTSourceToLineNumbers.getLine(int(_def["src"].split(":",)[0]))),
+                    "info":_def["name"]
+                })
+                if(self.loggingLevel == "DEBUG"):
                     print("Def: " + _def["name"] + " at line:" + str(mapASTSourceToLineNumbers.getLine(int(_def["src"].split(":",)[0]))))
             
             uses = []
             uses = DefUseAnalysis.getAllUsesAtNode(function, uses)
             for use in uses:
+                self.statsUses.append({
+                    "line":str(mapASTSourceToLineNumbers.getLine(int(use["src"].split(":",)[0]))),
+                    "info":use["name"]
+                })
                 print("Use: " +
                       use["name"] +
                       " at line:" + str(mapASTSourceToLineNumbers.getLine(int(use["src"].split(":",)[0]))))

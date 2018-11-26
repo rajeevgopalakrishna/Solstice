@@ -5,20 +5,20 @@ from ParseAST.parseAST import ParseAST
 class TestForAST(unittest.TestCase):
 
     def setUp(self):
-        astFD = open("./tests/for.ast","w")
-        errFD = open("./tests/for.err","w")
-        p = subprocess.Popen(['solc','--ast-compact-json','./tests/for.sol'], stdout=astFD,stderr=errFD)
+        astFD = open("./Tests/Parsing/for.ast","w")
+        errFD = open("./Tests/Parsing/for.err","w")
+        p = subprocess.Popen(['solc','--ast-compact-json','./Tests/Parsing/for.sol'], stdout=astFD,stderr=errFD)
         p.wait()
         astFD.close()
         errFD.close()
 
     def tearDown(self):
-        p = subprocess.Popen(['rm','-f','./tests.for.ast','./tests/for.err'])
+        p = subprocess.Popen(['rm','-f','./Tests/Parsing/for.ast','./Tests/Parsing/for.err'])
         p.wait()
         
     def test_for(self):
         parseAST = ParseAST()
-        astFD = open("./tests/for.ast","r")
+        astFD = open("./Tests/Parsing/for.ast","r")
         parseResults = parseAST.parse(astFD)
         self.assertEqual(parseResults['Counts']['ForCount'], 1)
         astFD.close()

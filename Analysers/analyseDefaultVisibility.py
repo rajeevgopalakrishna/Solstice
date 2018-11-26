@@ -6,6 +6,9 @@ from Analysers.mapASTSourceToLineNumbers import MapASTSourceToLineNumbers
 
 class AnalyseDefaultVisibility:
 
+    statsDefaultVisibilityForFunction = []
+    statsDefaultVisibilityForVariable = []
+    
     def analyser(self):
         mapASTSourceToLineNumbers = MapASTSourceToLineNumbers()
         print("\n<<<<<<<<<< Analyser: Default Visibility >>>>>>>>>>")
@@ -19,6 +22,10 @@ class AnalyseDefaultVisibility:
                 returnParametersSrc = function.returnParameters.get("src")
                 found = mapASTSourceToLineNumbers.chkStringPresent("public",parametersSrc, returnParametersSrc)
                 if (not found):
+                    self.statsDefaultVisibilityForFunction.append({
+                        "line":str(mapASTSourceToLineNumbers.getLine(int(function.src.split(":",)[0]))),
+                        "info":"default public visibility for function"
+                    })
                     print("Default public visibility for Function: " + function.name  + " at line:" + str(mapASTSourceToLineNumbers.getLine(int(function.src.split(":",)[0]))))
                     
         variableDeclarations = AnalyseVariable.getAllVariables()
@@ -30,4 +37,8 @@ class AnalyseDefaultVisibility:
                 typeSrc = variable.typeName.get("src")
                 found = mapASTSourceToLineNumbers.chkStringPresentVariableVisibility("internal",typeSrc, variableSrc)
                 if (not found):
+                    self.statsDefaultVisibilityForVariable.append({
+                        "line":str(mapASTSourceToLineNumbers.getLine(int(variable.src.split(":",)[0]))),
+                        "info":"default public visibility for variable"
+                    })
                     print("Default internal visibility for Variable: " + variable.name  + " at line:" + str(mapASTSourceToLineNumbers.getLine(int(variable.src.split(":",)[0]))))

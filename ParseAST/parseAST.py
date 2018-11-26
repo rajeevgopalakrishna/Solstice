@@ -250,7 +250,7 @@ class ParseAST:
         for statement in body['statements']:
             self.visitStatement(statement, functionDefinition)
         parameters = node['parameters']['parameters']
-        print("Parameters: " + str(parameters))
+        logging.debug("Parameters: " + str(parameters))
         for parameter in parameters:
             self.visitVariableDeclaration(parameter, functionDefinition)
             
