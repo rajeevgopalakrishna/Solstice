@@ -84,7 +84,7 @@ class AnalyseDefsUses:
                 found = False
                 for item in dataflow:
                     if(mapASTSourceToLineNumbers.getLine(int(item["src"].split(":",)[0])) == line):
-                        if varRef in item["in"]._set:
+                        if(item["in"] and varRef in item["in"]._set):
                             print(mapASTSourceToLineNumbers.getLine(int(item["in"].idToNodeMapping[varRef].src.split(":",)[0])))
                             found = True
                             break

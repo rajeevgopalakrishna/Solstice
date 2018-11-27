@@ -6,11 +6,12 @@ from Analysers.mapASTSourceToLineNumbers import MapASTSourceToLineNumbers
 from Analysers.analyseExceptions import AnalyseExceptions
 from Analysers.analyseContractFeatures import AnalyseContractFeatures
 from Analysers.analyseUncheckedCalls import AnalyseUncheckedCalls
-from Analysers.analyseUncheckedSelfdestructs import AnalyseUncheckedSelfdestructs
+from Analysers.analyseUncheckedSelfDestructs import AnalyseUncheckedSelfDestructs
 from Analysers.analyseDoSPatterns import AnalyseDoSPatterns
 from Analysers.analyseDeprecatedConstructs import AnalyseDeprecatedConstructs
 from Analysers.analyseDefsUses import AnalyseDefsUses
 from Analysers.analyseReentrancy import AnalyseReentrancy
+from Analysers.analyseControlFlowGraph import AnalyseControlFlowGraph
 from Analysers.analyseTaintedVariables import AnalyseTaintedVariables
 
 class Solstice:
@@ -75,8 +76,8 @@ class Solstice:
         analyseUncheckedCalls = AnalyseUncheckedCalls()
         analyseUncheckedCalls.analyser()
 
-        analyseUncheckedSelfdestructs = AnalyseUncheckedSelfdestructs()
-        analyseUncheckedSelfdestructs.analyser()
+        analyseUncheckedSelfDestructs = AnalyseUncheckedSelfDestructs()
+        analyseUncheckedSelfDestructs.analyser()
 
         analyseDoSPatterns = AnalyseDoSPatterns()
         analyseDoSPatterns.analyser()
@@ -90,6 +91,9 @@ class Solstice:
         analyseReentrancy = AnalyseReentrancy()
         analyseReentrancy.analyser()
 
+        analyseControlFlowGraph = AnalyseControlFlowGraph()
+        analyseControlFlowGraph.analyser()
+        
         analyseTaintVariables = AnalyseTaintedVariables()
         analyseTaintVariables.analyser()
         
