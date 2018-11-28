@@ -1,0 +1,4 @@
+// From https://raw.githubusercontent.com/authio-ethereum/wargame/master/NoRefunds.sol
+
+In function refund(), RefundReq storage req is initialised in the if() but not in the else() part. Because of hoisting and Solidity scoping, this results in a vulnerability. See https://www.reddit.com/r/ethdev/comments/7wp363/how_does_this_honeypot_work_it_seems_like_a/
+

@@ -13,6 +13,7 @@ from Analysers.analyseDefsUses import AnalyseDefsUses
 from Analysers.analyseReentrancy import AnalyseReentrancy
 from Analysers.analyseControlFlowGraph import AnalyseControlFlowGraph
 from Analysers.analyseTaintedVariables import AnalyseTaintedVariables
+from Analysers.analyseUninitialisedStoragePointers import AnalyseUninitialisedStoragePointers
 
 class Solstice:
     inputFile = ""
@@ -96,6 +97,9 @@ class Solstice:
         
         analyseTaintVariables = AnalyseTaintedVariables()
         analyseTaintVariables.analyser()
+
+        analyseUninitialisedStoragePointers = AnalyseUninitialisedStoragePointers()
+        analyseUninitialisedStoragePointers.analyser()
         
         astFD.close()
         

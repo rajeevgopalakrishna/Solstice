@@ -18,4 +18,3 @@ class VariableDeclaration:
         self.value = node.get("value")
         self.visibility =  node.get("visibility")
         
-        
