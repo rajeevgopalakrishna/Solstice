@@ -18,12 +18,12 @@ class AnalyseUncheckedCalls:
             node = call.parent
             checked = False
             while(node.nodeType != "ContractDefinition"):
-                if(node.nodeType == "FunctionCall" and node.name == "assert"):
+                if(node.nodeType == "FunctionCall" and (node.name == "assert" or node.name == "require")):
                     self.statsAssertCheckedCalls.append({
                         "line":str(mapASTSourceToLineNumbers.getLine(int(call.src.split(":",)[0]))),
                         "info":"assert checked call"
                     })
-                    print("call checked with assert()")
+                    print("call checked with assert() or require()")
                     checked = True
                     break
                 if((node.nodeType == "UnaryOperation" or node.nodeType == "BinaryOperation") and node.type == "ifStatementCondition"):

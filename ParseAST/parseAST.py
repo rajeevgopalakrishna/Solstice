@@ -33,13 +33,16 @@ class ParseAST:
 
     def visitVariableDeclarationStatement(self, statement, parent):
        logging.debug("VariableDeclarationStatement")
-       variableDeclarationStatement = VariableDeclarationStatement(statement)
-       variableDeclarationStatement.parent = parent
-       parent.children.append(variableDeclarationStatement)
+       variableDeclarationStatementInstance = VariableDeclarationStatement(statement)
+       variableDeclarationStatementInstance.parent = parent
+       parent.children.append(variableDeclarationStatementInstance)
        self.parseResults['Counts']['VariableDeclarationStatementCount'] += 1
        for declaration in statement['declarations']:
-                self.visitVariableDeclaration(declaration, variableDeclarationStatement)
-        
+                self.visitVariableDeclaration(declaration, variableDeclarationStatementInstance)
+       if(statement.get("initialValue")):
+           logging.debug("Initial value")
+           self.visitExpression(statement['initialValue'],variableDeclarationStatementInstance,"variableDeclarationInitialValue")
+                                
     def visitIfStatement(self, ifStatement, parent):
         logging.debug("IfStatement")
         ifStatementInstance = IfStatement(ifStatement)
@@ -247,12 +250,13 @@ class ParseAST:
         functionDefinition.parent = parent
         parent.children.append(functionDefinition)
         body = node['body']
-        for statement in body['statements']:
-            self.visitStatement(statement, functionDefinition)
-        parameters = node['parameters']['parameters']
-        logging.debug("Parameters: " + str(parameters))
-        for parameter in parameters:
-            self.visitVariableDeclaration(parameter, functionDefinition)
+        if(body is not None):
+            for statement in body['statements']:
+                self.visitStatement(statement, functionDefinition)
+            parameters = node['parameters']['parameters']
+            logging.debug("Parameters: " + str(parameters))
+            for parameter in parameters:
+                self.visitVariableDeclaration(parameter, functionDefinition)
             
     def visitModifierDefinition(self, node, parent):
         logging.debug("Modifier Name: " + node['name'])

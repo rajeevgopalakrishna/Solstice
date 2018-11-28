@@ -12,7 +12,7 @@ class AnalyseReentrancy:
     def analyser(self):
         expressions = AnalyseExpression.getAllExpressions()
         mapASTSourceToLineNumbers = MapASTSourceToLineNumbers()
-        logging.debug("\n<<<<<<<<<< Analyser: Reentrancy >>>>>>>>>>")
+        print("\n<<<<<<<<<< Analyser: Reentrancy >>>>>>>>>>")
         
         calls = AnalyseExpression.getAllCalls()
         for call in calls:

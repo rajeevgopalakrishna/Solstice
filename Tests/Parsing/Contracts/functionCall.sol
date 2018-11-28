@@ -12,4 +12,5 @@ contract FunctionCallTest {
   function bar() {
     foo(10);
   }
+
 }
