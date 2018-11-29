@@ -52,14 +52,13 @@ class AnalyseDefsUses:
                           " kill: " + str(_kill)
                     )
                 
-                    for var in _in._set:
-                        print("in: " + var + " defined at line:" + str(mapASTSourceToLineNumbers.getLine(int(_in.idToNodeMapping[var].split(":",)[0]))))
-                    print(" out: " + str(_out))
+                for var in _in._set:
+                    print("in: " + var + " defined at line:" + str(mapASTSourceToLineNumbers.getLine(int(_in.idToNodeMapping[var].split(":",)[0]))))
+                print(" out: " + str(_out))
 
 
             defs = []
             defs = DefUseAnalysis.getAllDefsAtNode(function, defs)
-            
             for _def in defs:
                 self.statsDefs.append({
                     "line":str(mapASTSourceToLineNumbers.getLine(int(_def["src"].split(":",)[0]))),

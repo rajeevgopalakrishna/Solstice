@@ -1,4 +1,5 @@
 import logging, sys
+from ParseAST.functionDefinition import FunctionDefinition
 from ParseAST.expressionStatement import ExpressionStatement
 from ParseAST.identifier import Identifier
 from ParseAST.expression import Expression
@@ -6,6 +7,13 @@ from ParseAST.ifStatement import IfStatement
 from Libraries.myset import MySet
 
 class DefUseAnalysis:
+    def getDefsAtFunctionDefinition(functionDefinition, defs, src):
+        parameters = functionDefinition.parameters["parameters"]
+        for parameter in parameters:
+            logging.debug("Def parameter : " + parameter["name"])
+            defs.append({"name":parameter["name"], "referencedDeclaration":parameter["id"], "src":functionDefinition.src})
+        return defs
+        
     def getDefs(expression, defs, src):
         if (isinstance(expression, Identifier)):
             logging.debug("getDefs expression: " + expression.name)
@@ -24,7 +32,11 @@ class DefUseAnalysis:
 
 
     def getAllDefsAtNode(node, defs):
-        if (isinstance(node, Expression) and (node.type == "leftHandSide" or node.type == "subExpression")):
+        if (isinstance(node, FunctionDefinition)):
+            logging.debug("Getting defs at function definition")
+            defs = DefUseAnalysis.getDefsAtFunctionDefinition(node, defs, node.src)
+            logging.debug("defs: " + str(defs))
+        if(isinstance(node, Expression) and (node.type == "leftHandSide" or node.type == "subExpression")):
             defs = DefUseAnalysis.getDefs(node, defs, node.src)
         for child in node.children:
             DefUseAnalysis.getAllDefsAtNode(child, defs)
@@ -91,8 +103,9 @@ class DefUseAnalysis:
         _gen = MySet()
         _kill = MySet()
         _out = _in
-        if (isinstance(node, ExpressionStatement) or 
-            isinstance(node, Expression) and
+        if (isinstance(node, FunctionDefinition) or
+            isinstance(node, ExpressionStatement) or 
+            (isinstance(node, Expression) and
             (node.type == "rightHandSide" or
              node.type == "subExpression" or
              node.type == "functionCallArgument" or
@@ -101,12 +114,14 @@ class DefUseAnalysis:
              node.type == "doWhileCondition" or
              node.type == "forStatementCondition" or
              node.type == "forStatementLoopExpression"
-            )):
+            ))):
             defs = []
             defs = DefUseAnalysis.getAllDefsAtNode(node, defs)
             if (len(defs) == 0):
+                logging.debug("here0")
                 dataflow.append({"id":node.id, "src":node.src, "in":_in, "gen":_gen, "kill":_kill, "out":_out})
             else:
+                logging.debug("here1")
                 for _def in defs:
                     _gen.add(_def["referencedDeclaration"], node)
                     logging.debug("Adding " + str(_def["referencedDeclaration"]) + " to _gen for node ID: " + str(node.id))
@@ -142,6 +157,12 @@ class DefUseAnalysis:
         _in = MySet()
         _out = MySet()
         dataflow = []
+
+        _gen = MySet()
+        _kill = MySet()
+        _out = DefUseAnalysis.getDataflowForNode(functionDefinition, dataflow, _in)
+        _in = _out
+
         children = functionDefinition.children;
         for child in children:
             _gen = MySet()
