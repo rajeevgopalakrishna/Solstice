@@ -7,7 +7,7 @@ from ParseAST.ifStatement import IfStatement
 from Libraries.myset import MySet
 
 class DefUseAnalysis:
-    def getDefsAtFunctionDefinition(functionDefinition, defs, src):
+    def getDefsAtFunctionDefinition(functionDefinition, defs):
         parameters = functionDefinition.parameters["parameters"]
         for parameter in parameters:
             logging.debug("Def parameter : " + parameter["name"])
@@ -34,7 +34,7 @@ class DefUseAnalysis:
     def getAllDefsAtNode(node, defs):
         if (isinstance(node, FunctionDefinition)):
             logging.debug("Getting defs at function definition")
-            defs = DefUseAnalysis.getDefsAtFunctionDefinition(node, defs, node.src)
+            defs = DefUseAnalysis.getDefsAtFunctionDefinition(node, defs)
             logging.debug("defs: " + str(defs))
         if(isinstance(node, Expression) and (node.type == "leftHandSide" or node.type == "subExpression")):
             defs = DefUseAnalysis.getDefs(node, defs, node.src)
@@ -55,7 +55,7 @@ class DefUseAnalysis:
         for expression in Expression.registry:
             if (expression.type == "rightHandSide" or expression.type == "subExpression"):
                 logging.debug("Calling getUses")
-                defs = DefUseAnalysis.getUses(expression, uses, expression.src)
+                uses = DefUseAnalysis.getUses(expression, uses, expression.src)
         return uses
 
     def getAllUsesAtNode(node, uses):
