@@ -69,4 +69,7 @@ class AnalyseContractFeatures:
                 })
                 print("State variable")
             else:
-                print("Local variable")
+                if (variable.parent.nodeType == "FunctionDefinition"):
+                    print("Function parameter")
+                else:
+                    print("Local variable")

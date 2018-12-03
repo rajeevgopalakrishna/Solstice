@@ -1,10 +1,12 @@
+import logging
+
 class MapASTSourceToLineNumbers:
     accumulatedCharacterCounts = []
     inputFile = ""
     
     def analyser(self, processFile):
         MapASTSourceToLineNumbers.inputFile = processFile        
-        print("Runing MapASTSourceToLineNumbers on " + self.inputFile)
+        logging.debug("Running MapASTSourceToLineNumbers on " + self.inputFile)
         inputFileFD = open(MapASTSourceToLineNumbers.inputFile,"r")
         lines = inputFileFD.readlines()
         for index in range(len(lines)):
