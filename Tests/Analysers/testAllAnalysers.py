@@ -17,7 +17,8 @@ class TestAnalysers(unittest.TestCase):
     analyser12 = "analyseUncheckedSelfDestructs"
     analyser13 = "analyseUninitialisedStoragePointers"
     analyser14 = "analyseDefsUses"
-    totalAnalysers = '14'
+    analyser15 = "analyseTaintedVariables"
+    totalAnalysers = '15'
     
     testDir = "./Tests/Analysers/"
     
@@ -51,6 +52,8 @@ class TestAnalysers(unittest.TestCase):
         p13.wait()
         p14 = subprocess.Popen(['python3',self.testDir+self.analyser14 +'.py'], stdout=outFD, stderr=outFD)
         p14.wait()
+        p15 = subprocess.Popen(['python3',self.testDir+self.analyser15 +'.py'], stdout=outFD, stderr=outFD)
+        p15.wait()
         outFD.close()
 
         

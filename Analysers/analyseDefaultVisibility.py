@@ -30,7 +30,7 @@ class AnalyseDefaultVisibility:
                     
         variableDeclarations = AnalyseVariable.getAllVariables()
         for variable in variableDeclarations:
-            if (variable.visibility == "internal"):
+            if (variable.visibility == "internal" and (not (variable.parent.nodeType == "FunctionDefinition"))):
                 # Determine if "internal" visibility was explicitly specified or implicitly inferred
                 # Check if "internal" keyword is present between type and variable name
                 variableSrc = variable.src

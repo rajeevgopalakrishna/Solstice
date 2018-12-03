@@ -18,9 +18,10 @@ class AnalyseUninitialisedStoragePointers:
             logging.debug("type: " + variable.typeDescriptions.get("typeIdentifier"))
             isVariableUninitialised = True
             parent = variable.parent
-            if (parent.nodeType == "VariableDeclarationStatement" and parent.initialValue != None):
+            if ((parent.nodeType == "VariableDeclarationStatement" and parent.initialValue != None) or parent.nodeType == "FunctionDefinition"):
                 isVariableUninitialised = False
             if (variable.stateVariable is False and
+                isVariableUninitialised and
                 (variable.storageLocation == "storage" or
                  (variable.storageLocation == "default" and
                    ("struct" in variable.typeDescriptions.get("typeIdentifier") or
@@ -29,7 +30,6 @@ class AnalyseUninitialisedStoragePointers:
                    )
                  )
                 )
-                and isVariableUninitialised
             ):
                 self.statsUninitialisedStoragePointers.append({
                     "line":str(mapASTSourceToLineNumbers.getLine(int(variable.src.split(":",)[0]))),

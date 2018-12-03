@@ -65,14 +65,26 @@ class Solstice:
         analyseContractFeatures = AnalyseContractFeatures()
         analyseContractFeatures.analyser()
 
+        analyseControlFlowGraph = AnalyseControlFlowGraph()
+        analyseControlFlowGraph.analyser()
+
         analyseDefaultVisibility = AnalyseDefaultVisibility()
         analyseDefaultVisibility.analyser()
-        
+
+        analyseDeprecatedConstructs = AnalyseDeprecatedConstructs()
+        analyseDeprecatedConstructs.analyser()
+
+        analyseDoSPatterns = AnalyseDoSPatterns()
+        analyseDoSPatterns.analyser()
+
         analyseExternalContractInteractions = AnalyseExternalContractInteractions()
         analyseExternalContractInteractions.analyser()
         
         analyseExceptions = AnalyseExceptions()
         analyseExceptions.analyser()
+
+        analyseReentrancy = AnalyseReentrancy()
+        analyseReentrancy.analyser()
 
         analyseUncheckedCalls = AnalyseUncheckedCalls()
         analyseUncheckedCalls.analyser()
@@ -80,27 +92,15 @@ class Solstice:
         analyseUncheckedSelfDestructs = AnalyseUncheckedSelfDestructs()
         analyseUncheckedSelfDestructs.analyser()
 
-        analyseDoSPatterns = AnalyseDoSPatterns()
-        analyseDoSPatterns.analyser()
-
-        analyseDeprecatedConstructs = AnalyseDeprecatedConstructs()
-        analyseDeprecatedConstructs.analyser()
-
-        analyseDefsUses = AnalyseDefsUses()
-        analyseDefsUses.analyser()
-
-        analyseReentrancy = AnalyseReentrancy()
-        analyseReentrancy.analyser()
-
-        analyseControlFlowGraph = AnalyseControlFlowGraph()
-        analyseControlFlowGraph.analyser()
-        
-        analyseTaintVariables = AnalyseTaintedVariables()
-        analyseTaintVariables.analyser()
-
         analyseUninitialisedStoragePointers = AnalyseUninitialisedStoragePointers()
         analyseUninitialisedStoragePointers.analyser()
         
+        analyseDefsUses = AnalyseDefsUses()
+        analyseDefsUses.analyser()
+
+        analyseTaintVariables = AnalyseTaintedVariables()
+        analyseTaintVariables.analyser()
+
         astFD.close()
         
 if __name__ == "__main__":
