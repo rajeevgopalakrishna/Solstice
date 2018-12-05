@@ -44,7 +44,7 @@ Error-handling in Solidity using *require*, *assert* and *revert* have some nuan
 
 10. Reentrancy
 
-Reentrancy as an attack vector has been well [documented] (https://consensys.github.io/smart-contract-best-practices/known_attacks/#reentrancy) and exploitet. This analyser uses heuristics to detect potential changes to contract state after detecting a *call* construct.
+Reentrancy as an attack vector has been well [documented](https://consensys.github.io/smart-contract-best-practices/known_attacks/#reentrancy) and exploitet. This analyser uses heuristics to detect potential changes to contract state after detecting a *call* construct.
 
 11. Unchecked *call*
 
