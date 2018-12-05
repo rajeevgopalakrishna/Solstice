@@ -1,6 +1,6 @@
 **SOLSTICE**: **SOL**idity **S**ecurity **T**ool for **I**nvestigative **C**ontract **E**xamination
 
-The goal of Solstice is to provide a security analysis framework to software developers for investigative smart contract examination. The wishlist for such a framework typically includes the following features: offer a range of analyses relevant to highlighting and fixing security concerns in the source code, use heuristics to cover a broad range of properties, report results within seconds, allow users to annotate specific code or specify properties to be examined or ignored, allow users to configure the breadth and depth of analyses, allow users to filter out suspected false positives, provide an extensible language for user-defined analyses or queries and finally, be integrated with commonly used IDEs.
+The goal of Solstice is to provide a security analysis framework to software developers for investigative smart contract examination. The wish-list for such a framework typically includes the following features: offer a range of analyses relevant to highlighting and fixing security concerns in the source code, use heuristics to cover a broad range of properties, report results within seconds, allow users to annotate specific code or specify properties to be examined or ignored, allow users to configure the breadth and depth of analyses, allow users to filter out suspected false positives, provide an extensible language for user-defined analyses or queries and finally, be integrated with commonly used IDEs.
 
 The first prototype of Solstice (code named W18 - see below for naming rationale) is a command-line tool which can be used to run 15 different static analyses on Solidity smart contracts. These cover a broad range of well-known security/software properties with Ethereum smart contracts today such as those dealing with reentrancy, exceptions, denial-of-service and uninitialised storage pointers.
 
@@ -20,7 +20,7 @@ Explicitly specifying visibility for functions in Solidity is a security best pr
 
 4. Deprecated Constructs
 
-The use of *tx.origin* and block properties such as *number* and *timestamp* have been deprecated over time because developers used these features with incorrect assumptions about their semantics and security guarentees. So this analyser detects usage of these constructs and reminds developers that they have been deprecated.
+The use of *tx.origin* and block properties such as *number* and *timestamp* have been deprecated over time because developers used these features with incorrect assumptions about their semantics and security guarantees. So this analyser detects usage of these constructs and reminds developers that they have been deprecated.
 
 5. Denial-of-Service with Block Gas Limit
 
@@ -28,11 +28,11 @@ When *send* or *transfer* is used within a loop, there is a possibility of a den
 
 6. Denial-of-Service with Unexpected *revert*
 
-An attacker who controls the destination address of a payment can force the transaction to fail. Depending on the use of *send*+*require* or *transfer in the contract, this will cause a revert. This vulnerability is described [here](https://consensys.github.io/smart-contract-best-practices/known_attacks/#dos-with-unexpected-revert). If the contract logic is not programmed defensively to consider this scenario (i.e. pull over push payments) then it will result in a denial-of-service attack. This analyser uses semantic heuristics to detect and warn about the use of *send* with *require* or *transfer*.
+An attacker who controls the destination address of a payment can force the transaction to fail. Depending on the use of *send*+*require* or *transfer* in the contract, this will cause a revert. This vulnerability is described [here](https://consensys.github.io/smart-contract-best-practices/known_attacks/#dos-with-unexpected-revert). If the contract logic is not programmed defensively to consider this scenario (i.e. pull over push payments) then it will result in a denial-of-service attack. This analyser uses semantic heuristics to detect and warn about the use of *send* with *require* or *transfer*.
 
 7. Denial-of-Service with Unexpected *revert* in Loop
 
-This vulnerability is similar to the previous one but the presence of a loop indicates a greater likelihood of a denial-of-serivce attack because the revert will force the loop to terminate prematurely. The analyser detects loop semantics to warn the developer.
+This vulnerability is similar to the previous one but the presence of a loop indicates a greater likelihood of a denial-of-service attack because the revert will force the loop to terminate prematurely. The analyser detects loop semantics to warn the developer.
 
 8. External Contract Interactions
 
@@ -48,7 +48,7 @@ Reentrancy as an attack vector has been well [documented](https://consensys.gith
 
 11. Unchecked *call*
 
-A *call* is a low-level interface used to interact with other contracts and returns a boolean value which should be checked by the caller. This analyer uses heuristics to detect the presence of *call* whose return value is not checked by an *assert*, *require* or a *if* condition.
+A *call* is a low-level interface used to interact with other contracts and returns a boolean value which should be checked by the caller. This analyser uses heuristics to detect the presence of *call* whose return value is not checked by an *assert*, *require* or a *if* condition.
 
 12. Unchecked *selfdestruct*
 
@@ -68,7 +68,7 @@ Taint analysis is the process of discovering attacker-controlled variables (term
 
 While the coverage, correctness and precision of these analyses is admittedly limited in this initial release, the goal was to start experimenting with Solidity compiler's AST parsing and demonstrate basic capabilities of static analysis (vis-a-vis other approaches, e.g. symbolic execution) to get feedback from smart contract developers for improving the depth, breadth and usability of analysers in future releases.
 
-For example, there are many Solidity-related aspects which need a lot more work such as handling modifiers/inheritence/interfaces/libraries, better handling of different value/reference data types and the scoping rules (from JavaScript earlier to C99 in Solidity compiler v0.5.0 onwards). There are also significant algorithmic improvements desired for the analysers such as making them interprocedural (i.e. track control/data flow across function calls), context-sensitive (i.e. accounting for different call sites for a particular function and hence the different data flows) and increasing path-sensitivity (i.e. accounting for different data flows along different paths e.g. if-then-else and loops). The analysers are currently intraprocedural and somewhat flow-sensitive. The DefUse and Taint analysers especially are still very basic and minimally functional at this point. So a lot of work is required to make this prototype useful in the real-world.
+For example, there are many Solidity-related aspects which need a lot more work such as handling modifiers/inheritance/interfaces/libraries, better handling of different value/reference data types and the scoping rules (from JavaScript earlier to C99 in Solidity compiler v0.5.0 onwards). There are also significant algorithmic improvements desired for the analysers such as making them interprocedural (i.e. track control/data flow across function calls), context-sensitive (i.e. accounting for different call sites for a particular function and hence the different data flows) and increasing path-sensitivity (i.e. accounting for different data flows along different paths e.g. if-then-else and loops). The analysers are currently intraprocedural and somewhat flow-sensitive. The DefUse and Taint analysers especially are still very basic and minimally functional at this point. So a lot of work is required to make this prototype useful in the real-world.
 
 There are many open-source security tools being developed for analysing smart contracts such as Mythril, Manticore, Oyente, Securify and Slither. Of all these, Solstice is similar to Slither in its approach.
 
