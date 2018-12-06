@@ -65,7 +65,9 @@ There are also significant algorithmic improvements desired for the analysers su
 There are many open-source security tools being developed for analysing smart contracts such as Mythril, Manticore, Oyente, Securify and Slither. Of these, Solstice is similar to Slither in its approach. These are early days for smart contract security tools and it will be interesting to see how their capabilities evolve along with the ecosystem.
 
 ### Why "Solstice"? ###
-From Wikipedia: "a solstice is an event occurring when the Sun appears to reach its most northerly or southerly excursion relative to the celestial equator on the celestial sphere. Two solstices occur annually, around June 21 and December 21. The day of a solstice in either hemisphere has either the most sunlight of the year (summer solstice) or the least sunlight of the year (winter solstice) for any place other than the Equator." Security vulnerabilities, figuratively speaking, exist in software where the least light is shone, i.e. untested code with programmer errors, and security tools are expected to shine the most light on such parts/aspects of software. Hence the name "Solstice" :-). The code name for the initial release W18 stands for Winter Solstice 2018 (in the northern hemisphere).
+From Wikipedia: "a solstice is an event occurring when the Sun appears to reach its most northerly or southerly excursion relative to the celestial equator on the celestial sphere. Two solstices occur annually, around June 21 and December 21. The day of a solstice in either hemisphere has either the most sunlight of the year (summer solstice) or the least sunlight of the year (winter solstice) for any place other than the Equator."
+
+Security vulnerabilities, figuratively speaking, exist in software where the least light is shone, i.e. untested code with programmer errors, and security tools are expected to shine the most light on such parts/aspects of software. Hence the name "Solstice" :-). The code name for the initial release W18 stands for Winter Solstice 2018 (in the northern hemisphere).
 
 
 
