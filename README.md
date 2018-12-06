@@ -66,11 +66,11 @@ Usage
 
 Solstice requires Python 3.6+ and Solidity compiler solc version < 0.5.0. It has been tested with Python 3.6.5 and solc 0.4.24. The available options are:
 
-`-i <Input Solidity File>` :Specify the input Solidity file.
-`-o <Output Report File>` :Specify the output report file. Default is stdout.
-`-d` :Print debug statements. Helpful in debugging during development.
-`-h` :Print help message.
-`--<AnalyserID to be run>` :Specify the analyser to be run by IDs 1,2..15. Default is to run all 15 analysers.
+  `-i <Input Solidity File>` :Specify the input Solidity file.
+  `-o <Output Report File>` :Specify the output report file. Default is stdout.
+  `-d` :Print debug statements. Helpful in debugging during development.
+  `-h` :Print help message.
+  `--<AnalyserID to be run>` :Specify the analyser to be run by IDs 1,2..15. Default is to run all 15 analysers.
 
 ### Run Solstice ###
 
