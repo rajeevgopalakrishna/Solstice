@@ -9,6 +9,7 @@ Solstice infers syntactic and semantic properties from Solidity source code of s
 
 ### Analysers ###
 =================
+
 The 15 implemented analysers are briefly described below:
 
 #### 1. Contract Features ####
@@ -58,6 +59,7 @@ Taint analysis is the process of discovering attacker-controlled variables (term
 
 ### Usage ###
 =============
+
 Run Solstice on a Solidity file:
 
     $ python3 Solstice.py -i ./Tests/Analysers/Contracts/Real-World/GnosisSafe.sol
@@ -68,14 +70,20 @@ Run Solstice on a Solidity file:
 
 Solstice requires Python 3.6+ and Solidity compiler solc version < 0.5.0. It has been tested with Python 3.6.5 and solc 0.4.24. The available options are:
 
-	 -i <Input Solidity File> :Specify the input Solidity file.
-	 -o <Output Report File> :Specify the output report file. Default is stdout.
-	 -d :Print debug statements. Helpful in debugging during development.
-	 -h :Print help message.
-	 --<AnalyserID to be run> :Specify the analyser to be run by IDs 1,2..15. Default is to run all 15 analysers.
+	 -i <Input Solidity File>
+:Specify the input Solidity file.
+	 -o <Output Report File>
+:Specify the output report file. Default is stdout.
+	 -d
+:Print debug statements. Helpful in debugging during development.
+	 -h
+:Print help message.
+	 --<AnalyserID to be run>
+:Specify the analyser to be run by IDs 1,2..15. Default is to run all 15 analysers.
 
 ### Current Status and Next Steps ###
 =====================================
+
 While the coverage, correctness and precision of implemented analysers and underlying framework is admittedly limited in this initial release, the goal was to experiment with Solidity compiler's AST parsing and evaluate feasibility of simple static analysis (vis-a-vis other approaches, e.g. symbolic execution). This initial release of a work-in-progress prototype is mainly to get feedback from smart contract developers for improving the depth, breadth and usability of this tool in future releases.
 
 For example, there are many Solidity-related aspects which need a lot more work such as complete parsing of the AST, handling modifiers/inheritance/interfaces/libraries, better handling of different value/reference data types and the scoping rules (from JavaScript earlier to C99 in Solidity compiler v0.5.0 onwards).
@@ -86,6 +94,7 @@ There are many open-source security tools being developed for analysing smart co
 
 ### Why "Solstice"? ###
 =======================
+
 From Wikipedia: "a solstice is an event occurring when the Sun appears to reach its most northerly or southerly excursion relative to the celestial equator on the celestial sphere. Two solstices occur annually, around June 21 and December 21. The day of a solstice in either hemisphere has either the most sunlight of the year (summer solstice) or the least sunlight of the year (winter solstice) for any place other than the Equator."
 
 Security vulnerabilities, figuratively speaking, exist in software where the least light is shone, i.e. untested code with programmer errors, and security tools are expected to shine the most light on such parts/aspects of software. Hence the name "Solstice" :-). The code name for the initial release W18 stands for Winter Solstice 2018 (in the northern hemisphere).
