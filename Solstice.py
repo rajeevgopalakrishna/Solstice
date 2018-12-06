@@ -42,8 +42,7 @@ class Solstice:
         try:
             opts, args = getopt.getopt(argv,"hdi:o:",["help","ifile=","ofile=","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"])
         except getopt.GetoptError:
-            print("python3 Solstice.py -i <Input Solidity File> -o <Output Report File> [--<AnalyserID to be run>, ..]")
-            print("Example: python3 Solstice.py -i ./Tests/Analysers/Contracts/Real-World/GnosisSafe.sol --1 --2") 
+            print("Solstice.py -i <Input Solidity File> -o <Output Report File>")
             sys.exit(2)
         for opt, arg in opts:
             if opt in ("-h", "--help"):
