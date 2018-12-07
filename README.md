@@ -93,7 +93,7 @@ Why "Solstice"?
 
 From Wikipedia: "a solstice is an event occurring when the Sun appears to reach its most northerly or southerly excursion relative to the celestial equator on the celestial sphere. Two solstices occur annually, around June 21 and December 21. The day of a solstice in either hemisphere has either the most sunlight of the year (summer solstice) or the least sunlight of the year (winter solstice) for any place other than the Equator."
 
-Security vulnerabilities, figuratively speaking, exist in software where the least light is shone, i.e. untested code with programmer errors, and security tools are expected to shine the most light on such parts/aspects of software. Hence the name "Solstice" :-). The code name for the initial release W18 stands for Winter Solstice 2018 (in the northern hemisphere).
+Security vulnerabilities, figuratively speaking, exist in software where the least light was shone, i.e. untested code with programmer errors, and security tools are expected to shine the most light on such parts/aspects of software. Hence the name "Solstice" :-). The code name for the initial release W18 stands for Winter Solstice 2018 (in the northern hemisphere).
 
 
 
