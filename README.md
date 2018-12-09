@@ -1,7 +1,9 @@
 **SOLSTICE**: **SOL**idity **S**ecurity **T**ool for **I**nvestigative **C**ontract **E**xamination
 ===================================================================================================
 
-The goal of Solstice is to provide a security analysis framework to software developers for investigative smart contract examination. The wish-list for such a framework typically includes the following features: offer a range of analyses relevant to highlighting and fixing security concerns in the source code, use heuristics to cover a broad range of properties, report results within seconds, allow users to annotate specific code or specify properties to be examined or ignored, allow users to configure the breadth and depth of analyses, allow users to filter out suspected false positives, provide an extensible language for user-defined analyses or queries and finally, be integrated with commonly used IDEs.
+The goal of Solstice is to provide a security analysis framework to software developers for investigative smart contract examination.
+
+The wish-list for such a framework typically includes the following features: offer a range of analyses relevant to highlighting and fixing security concerns in the source code, use heuristics to cover a broad range of properties, report results within seconds, allow users to annotate specific code or specify properties to be examined or ignored, allow users to configure the breadth and depth of analyses, allow users to filter out suspected false positives, provide an extensible language for user-defined analyses or queries and finally, be integrated with commonly used IDEs.
 
 The first prototype of Solstice, code named W18 (see below for naming rationale), is a command-line tool which can be used to run 15 different static analyses on Solidity smart contracts. These cover a broad range of well-known security/software properties with Ethereum smart contracts today such as those dealing with reentrancy, exceptions, denial-of-service and uninitialised storage pointers.
 
