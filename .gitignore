@@ -1,3 +1,4 @@
+# test generated intermediate files
 *.ast
 *.err
 
