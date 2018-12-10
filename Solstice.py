@@ -47,8 +47,8 @@ class Solstice:
             sys.exit(2)
         for opt, arg in opts:
             if opt in ("-h", "--help"):
-                print("Solstice.py -i <Input Solidity File> -o <Output Report File> --<Analyser#>")
-                print("Example: Solstice.py -i contract.sol --1 --3")
+                print("python3 Solstice.py -i <Input Solidity File> [-o <Output Report File>] [--<AnalyserID to be run>, ..]")
+                print("Example: python3 Solstice.py -i ./Tests/Analysers/Contracts/Real-World/GnosisSafe.sol --1 --2")
                 sys.exit()
             elif opt == "-d":
                 print("Setting Logging level to debug")
@@ -106,6 +106,14 @@ class Solstice:
             elif opt in ("--15"):
                 self.runAllAnalysers = False
                 self.runAnalyser15 = True
+
+        if (self.inputFile == ""):
+            print("Usage:")
+            print("  python3 Solstice.py -i <Input Solidity File> [-o <Output Report File>] [--<AnalyserID to be run>, ..]")
+            print("Example:")
+            print("  python3 Solstice.py -i ./Tests/Analysers/Contracts/Real-World/GnosisSafe.sol --1 --2")
+            exit()
+                
 
     def process(self):
         self.astFile = self.inputFile + ".ast"
