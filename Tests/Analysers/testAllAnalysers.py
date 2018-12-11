@@ -72,7 +72,6 @@ class TestAnalysers(unittest.TestCase):
         p15 = subprocess.Popen(['python3',self.testDir+self.analyser15 +'.py'], stdout=outFD, stderr=outFD)
         p15.wait()
         outFD.close()
-
         
     def tearDown(self):
         p1 = subprocess.Popen(['rm','-f',self.testDir+'testCheck.out'])
@@ -93,6 +92,10 @@ class TestAnalysers(unittest.TestCase):
         outFD.close()
         p2 = subprocess.Popen(['grep','FAIL','-A7',self.testDir+'testOutput.out'])
         p2.wait()
+        outFD = open(self.testDir + "testOutput.out","r")
+        lines = outFD.readlines()
+        print(lines)
+        outFD.close()
         
 if __name__ == '__main__':
     unittest.main()
