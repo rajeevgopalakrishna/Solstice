@@ -23,7 +23,7 @@ from Analysers.mapASTSourceToLineNumbers import MapASTSourceToLineNumbers
 from Analysers.analyseExceptions import AnalyseExceptions
 from Analysers.analyseContractFeatures import AnalyseContractFeatures
 from Analysers.analyseUncheckedCalls import AnalyseUncheckedCalls
-from Analysers.analyseUncheckedSelfDestructs import AnalyseUncheckedSelfDestructs
+from Analysers.analyseUncheckedSelfdestructs import AnalyseUncheckedSelfdestructs
 from Analysers.analyseDoSPatterns import AnalyseDoSPatterns
 from Analysers.analyseDeprecatedConstructs import AnalyseDeprecatedConstructs
 from Analysers.analyseDefsUses import AnalyseDefsUses
@@ -187,8 +187,8 @@ class Solstice:
             analyseUncheckedCalls.analyser()
 
         if (self.runAllAnalysers or self.runAnalyser12):
-            analyseUncheckedSelfDestructs = AnalyseUncheckedSelfDestructs()
-            analyseUncheckedSelfDestructs.analyser()
+            analyseUncheckedSelfdestructs = AnalyseUncheckedSelfdestructs()
+            analyseUncheckedSelfdestructs.analyser()
 
         if (self.runAllAnalysers or self.runAnalyser13):
             analyseUninitialisedStoragePointers = AnalyseUninitialisedStoragePointers()
