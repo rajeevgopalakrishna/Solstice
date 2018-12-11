@@ -31,7 +31,7 @@ class TestAnalysers(unittest.TestCase):
     analyser9 = "analyseExceptions"
     analyser10 = "analyseReentrancy"
     analyser11 = "analyseUncheckedCalls"
-    analyser12 = "analyseUncheckedSelfDestructs"
+    analyser12 = "analyseUncheckedSelfdestructs"
     analyser13 = "analyseUninitialisedStoragePointers"
     analyser14 = "analyseDefsUses"
     analyser15 = "analyseTaintedVariables"
