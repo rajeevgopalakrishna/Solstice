@@ -76,8 +76,8 @@ class TestAnalysers(unittest.TestCase):
     def tearDown(self):
         p1 = subprocess.Popen(['rm','-f',self.testDir+'testCheck.out'])
         p1.wait()
-#        p2 = subprocess.Popen(['rm','-f',self.testDir+'testOutput.out'])
-#        p2.wait()
+        p2 = subprocess.Popen(['rm','-f',self.testDir+'testOutput.out'])
+        p2.wait()
         
 
     
