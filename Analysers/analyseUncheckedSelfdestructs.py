@@ -19,10 +19,10 @@ from Analysers.mapASTSourceToLineNumbers import MapASTSourceToLineNumbers
 from AnalyseAST.functionCall import AnalyseFunctionCall
 from AnalyseAST.expression import AnalyseExpression
 
-class AnalyseUncheckedSelfDestructs:
+class AnalyseUncheckedSelfdestructs:
 
-    statsUncheckedSelfDestructs = []
-    statsConditionalCheckedSelfDestructs = []
+    statsUncheckedSelfdestructs = []
+    statsConditionalCheckedSelfdestructs = []
     
     def analyser(self):
         mapASTSourceToLineNumbers = MapASTSourceToLineNumbers()
@@ -36,7 +36,7 @@ class AnalyseUncheckedSelfDestructs:
                 checked = False
                 while(node.nodeType != "ContractDefinition"):
                     if(node.nodeType == "IfStatement"): # Add check for ifStatementCondition containing ownership check via msg.sender
-                        self.statsConditionalCheckedSelfDestructs.append({
+                        self.statsConditionalCheckedSelfdestructs.append({
                             "line":str(mapASTSourceToLineNumbers.getLine(int(functionCall.src.split(":",)[0]))),
                             "info":"conditional checked selfdestruct"
                         })
@@ -48,7 +48,7 @@ class AnalyseUncheckedSelfDestructs:
                 if(checked):
                     continue
                 else:
-                    self.statsUncheckedSelfDestructs.append({
+                    self.statsUncheckedSelfdestructs.append({
                         "line":str(mapASTSourceToLineNumbers.getLine(int(functionCall.src.split(":",)[0]))),
                         "info":"Unchecked selfdestruct"
                     })

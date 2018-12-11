@@ -19,11 +19,11 @@ import unittest
 import subprocess, os, sys
 from ParseAST.parseAST import ParseAST
 from Analysers.mapASTSourceToLineNumbers import MapASTSourceToLineNumbers
-from Analysers.analyseUncheckedSelfDestructs import AnalyseUncheckedSelfDestructs
+from Analysers.analyseUncheckedSelfdestructs import AnalyseUncheckedSelfdestructs
 
-class TestUncheckedSelfDestructs(unittest.TestCase):
+class TestUncheckedSelfdestructs(unittest.TestCase):
 
-    testFile = "uncheckedSelfDestructs"
+    testFile = "uncheckedSelfdestructs"
     testDir = "./Tests/Analysers/"
     testPath = testDir+testFile
 
@@ -45,12 +45,12 @@ class TestUncheckedSelfDestructs(unittest.TestCase):
         parseResults = parseAST.parse(astFD)
         mapASTSourceToLineNumbers = MapASTSourceToLineNumbers()
         mapASTSourceToLineNumbers.analyser(self.testDir+"Contracts/"+self.testFile+".sol")
-        analyseUncheckedSelfDestructs = AnalyseUncheckedSelfDestructs()
-        analyseUncheckedSelfDestructs.analyser()
-        self.assertEqual(len(analyseUncheckedSelfDestructs.statsConditionalCheckedSelfDestructs), 1)
-        self.assertEqual(analyseUncheckedSelfDestructs.statsConditionalCheckedSelfDestructs[0]["line"], "13")
-        self.assertEqual(len(analyseUncheckedSelfDestructs.statsUncheckedSelfDestructs), 1)
-        self.assertEqual(analyseUncheckedSelfDestructs.statsUncheckedSelfDestructs[0]["line"], "17")
+        analyseUncheckedSelfdestructs = AnalyseUncheckedSelfdestructs()
+        analyseUncheckedSelfdestructs.analyser()
+        self.assertEqual(len(analyseUncheckedSelfdestructs.statsConditionalCheckedSelfdestructs), 1)
+        self.assertEqual(analyseUncheckedSelfdestructs.statsConditionalCheckedSelfdestructs[0]["line"], "13")
+        self.assertEqual(len(analyseUncheckedSelfdestructs.statsUncheckedSelfdestructs), 1)
+        self.assertEqual(analyseUncheckedSelfdestructs.statsUncheckedSelfdestructs[0]["line"], "17")
         astFD.close()
         
 if __name__ == '__main__':
