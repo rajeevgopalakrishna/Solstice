@@ -1,0 +1,16 @@
+sudo: required
+os:
+  - linux
+language: python
+python:
+  - 3.6
+
+branches:
+  only:
+  - master
+
+install:
+  - Travis-Scripts/installDependencies.sh
+
+script:
+  - Travis-Scripts/test.sh
