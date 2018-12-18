@@ -82,13 +82,13 @@ Solstice requires Python 3.6+ and Solidity compiler solc version < 0.5.0. It has
 Current Status and Next Steps
 =============================
 
-While the coverage, correctness and precision of implemented analysers and underlying framework is admittedly limited in this initial release, the goal was to experiment with Solidity compiler's AST parsing and evaluate feasibility of simple dataflow analysis (vis-a-vis other approaches, e.g. symbolic execution). This initial release of a work-in-progress prototype is mainly to get feedback from smart contract developers for improving the depth, breadth and usability of this tool in future releases.
+While the implementation and real-world validation of analysers and underlying framework is admittedly limited in this initial release, the goal was to experiment with Solidity compiler's AST parsing and evaluate feasibility of simple dataflow analysis (vis-a-vis other approaches, e.g. symbolic execution). This initial release of a work-in-progress prototype is mainly to get feedback from smart contract developers for improving the depth, breadth and usability of this tool in future releases.
 
 For example, there are many Solidity-related aspects which need a lot more work such as complete parsing of the AST, handling modifiers/inheritance/interfaces/libraries, better handling of different value/reference data types and the scoping rules (from JavaScript earlier to C99 in Solidity compiler v0.5.0 onwards).
 
 There are also significant algorithmic improvements desired for the analysers such as making them interprocedural (i.e. track control/data flow across function calls), making them context-sensitive (i.e. accounting for different call sites for a particular function and hence the different data flows) and increasing path-sensitivity (i.e. accounting for different data flows along different paths e.g. if-then-else and loops). The analysers are currently intraprocedural and somewhat flow-sensitive. The DefUse and Taint analysers especially are still very basic and minimally functional at this point. So a lot more work is required to make this prototype useful in the real-world.
 
-There are many open-source security tools being developed for analysing smart contracts such as Mythril, Manticore, Oyente, Securify and Slither. Of these, Solstice is similar to Slither in its approach. These are early days for smart contract security tools and it will be interesting to see how their capabilities evolve along with the ecosystem.
+There are many open-source security tools being developed for analysing smart contracts such as [Mythril](https://github.com/ConsenSys/mythril-classic), [Manticore](https://github.com/trailofbits/manticore), [Oyente](https://github.com/melonproject/oyente), [Securify](https://github.com/eth-sri/securify) and [Slither](https://github.com/trailofbits/slither). Of these, Solstice is similar to Slither in its approach. These are early days for smart contract security tools and it will be interesting to see how their capabilities evolve along with the ecosystem.
 
 Why "Solstice"?
 ===============
