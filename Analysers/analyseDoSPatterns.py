@@ -52,6 +52,11 @@ class AnalyseDoSPatterns:
         transfers = AnalyseExpression.getAllTransfers()
         for transfer in transfers:
             print("transfer() at line:" + str(mapASTSourceToLineNumbers.getLine(int(transfer.src.split(":",)[0]))))
+            self.statsDoSWithUnexpectedRevert.append({
+                "line":str(mapASTSourceToLineNumbers.getLine(int(transfer.src.split(":",)[0]))),
+                "info":"transfer"
+            })
+            print("Potential DoS with (unexpected) revert")
             node = transfer.parent
             while(node.nodeType != "ContractDefinition"):
                 if(node.nodeType == "WhileStatement" or node.nodeType == "ForStatement"):
@@ -60,13 +65,6 @@ class AnalyseDoSPatterns:
                         "info":"transfer"
                     })
                     print("transfer() within loops are susceptible to DoS with block gas limit")
-                    break
-                if((node.nodeType == "FunctionCall" and node.name == "require")):
-                    self.statsDoSWithUnexpectedRevert.append({
-                        "line":str(mapASTSourceToLineNumbers.getLine(int(transfer.src.split(":",)[0]))),
-                        "info":"transfer"
-                    })
-                    print("Potential DoS with (unexpected) revert")
                     break
                 node = node.parent
 
