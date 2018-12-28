@@ -55,7 +55,8 @@ class ParseAST:
        parent.children.append(variableDeclarationStatementInstance)
        self.parseResults['Counts']['VariableDeclarationStatementCount'] += 1
        for declaration in statement['declarations']:
-                self.visitVariableDeclaration(declaration, variableDeclarationStatementInstance)
+           if (declaration and declaration.get("name")):
+               self.visitVariableDeclaration(declaration, variableDeclarationStatementInstance)
        if(statement.get("initialValue")):
            logging.debug("Initial value")
            self.visitExpression(statement['initialValue'],variableDeclarationStatementInstance,"variableDeclarationInitialValue")
@@ -162,7 +163,8 @@ class ParseAST:
 
     def visitReturnStatement(self, returnStatement, parent):
         logging.debug("Return")
-        self.visitExpression(returnStatement['expression'], parent, "returnStatement")
+        if (returnStatement.get("expression")):
+            self.visitExpression(returnStatement['expression'], parent, "returnStatement")
 
     def visitExpression(self, expression, parent, typeOfExpression):
         logging.debug("Expression")
